@@ -82,7 +82,7 @@ public class AddressBook {
     }
 
     /**
-     * Denna metod hanterar användarens input. Inputen ska skrivas med små bokstäver och är case-sensitive.
+     * Denna metod hanterar användarens input. Kommandon ska skrivas med små bokstäver och är case-sensitive.
      * @throws IOException
      */
     private void takeInput() throws IOException {
