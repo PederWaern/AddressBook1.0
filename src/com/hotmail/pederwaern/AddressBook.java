@@ -95,22 +95,22 @@ public class AddressBook {
             input = bufferedR.readLine();
             input = input.trim();
 
-            if (input.length()>WordChecker.ADD.length() &&
-                    input.subSequence(0, (WordChecker.ADD.length() +1) ).equals(WordChecker.ADD + " ") ){
+            if (input.length()> InputCommand.ADD.length() &&
+                    input.subSequence(0, (InputCommand.ADD.length() +1) ).equals(InputCommand.ADD + " ") ){
                 register.add(input);
             }
-            else if (input.equals(WordChecker.LIST)) {
+            else if (input.equals(InputCommand.LIST)) {
                 register.list();
             }
-            else if (input.length()>WordChecker.SEARCH.length() &&
-                    input.subSequence(0, (WordChecker.SEARCH.length() +1) ).equals(WordChecker.SEARCH + " ")  ){
+            else if (input.length()> InputCommand.SEARCH.length() &&
+                    input.subSequence(0, (InputCommand.SEARCH.length() +1) ).equals(InputCommand.SEARCH + " ")  ){
                 register.search(input);
 
             }
-            else if (input.equals(WordChecker.CLEAR)) {
+            else if (input.equals(InputCommand.CLEAR)) {
                 register.clear();
             }
-            else if (input.equals(WordChecker.QUIT)){
+            else if (input.equals(InputCommand.QUIT)){
                 break;}
 
 

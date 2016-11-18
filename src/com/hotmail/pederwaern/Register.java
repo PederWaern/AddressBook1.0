@@ -23,7 +23,7 @@ public class Register implements Serializable{
     public void add(String contactToAdd) {
 
         //kommandot "add " tas bort från strängen och blanka tecken före och efter.
-        contactToAdd = contactToAdd.substring(WordChecker.ADD.length()+1, contactToAdd.length());
+        contactToAdd = contactToAdd.substring(InputCommand.ADD.length()+1, contactToAdd.length());
         contactToAdd = contactToAdd.trim();
 
         List<String> tempWordList = new ArrayList<>();
@@ -82,7 +82,7 @@ public class Register implements Serializable{
      */
     public void search (String searchString){
 
-        searchString = searchString.substring(WordChecker.SEARCH.length()+1, searchString.length());
+        searchString = searchString.substring(InputCommand.SEARCH.length()+1, searchString.length());
         searchString = searchString.trim();
         searchString = searchString.toLowerCase();
         boolean stringFound = false;
