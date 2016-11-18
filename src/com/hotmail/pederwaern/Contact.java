@@ -59,7 +59,7 @@ public class Contact implements Serializable {
                 "Mailadress:" + getEmail() + "\n";
     }
 
-    public String searchResult() {
+    public String searchResultToString() {
         return getId() + " " + getFirstName() + " " + getLastName() + " " + getEmail();
     }
 

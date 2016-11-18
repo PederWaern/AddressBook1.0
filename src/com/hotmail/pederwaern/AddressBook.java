@@ -78,6 +78,7 @@ public class AddressBook {
     }
 
     private void displayWelcome() {
+
         System.out.println("Welcome!\nOptions: add\tlist\tsearch\tquit");
     }
 
@@ -86,35 +87,35 @@ public class AddressBook {
      * @throws IOException
      */
     private void takeInput() throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader bufferedR = new BufferedReader(new InputStreamReader(System.in));
         String input = "";
 
 
-        while (!input.equals(WordChecker.QUIT)) {
-            input = br.readLine();
+        while (true) {
+            input = bufferedR.readLine();
             input = input.trim();
 
             if (input.length()>WordChecker.ADD.length() &&
                     input.subSequence(0, (WordChecker.ADD.length() +1) ).equals(WordChecker.ADD + " ") ){
                 register.add(input);
-
-            } else if (input.equals(WordChecker.LIST)) {
+            }
+            else if (input.equals(WordChecker.LIST)) {
                 register.list();
-            } else if (input.length()>WordChecker.SEARCH.length() &&
+            }
+            else if (input.length()>WordChecker.SEARCH.length() &&
                     input.subSequence(0, (WordChecker.SEARCH.length() +1) ).equals(WordChecker.SEARCH + " ")  ){
                 register.search(input);
 
             }
-
             else if (input.equals(WordChecker.CLEAR)) {
                 register.clear();
             }
-            else  if (input.equals(WordChecker.QUIT)){
+            else if (input.equals(WordChecker.QUIT)){
                 break;}
 
 
         }
-        br.close();
+        bufferedR.close();
 
     }
 

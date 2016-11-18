@@ -36,11 +36,14 @@ public class WordChecker {
     /**
      *
      * @param emailadress
-     * @return true om strängen innehåller en @ och . Alltså bara en enkel kontroll och inte helt tillförlitlig!
+     * @return true om strängen innehåller minst en punkt och minst ett @. Sista "." måste av högre index i
+     * strängen än "@" för att strängen ska kunna vara en giltig mailadress. OBS! ingen garanti för att det är ett
+     * giltigt format på emailadressen.
      */
     static boolean isAnEmailAdress(String emailadress) {
 
-        return (emailadress.contains("@") && emailadress.contains("."));
+        return (emailadress.contains("@") && emailadress.contains(".") &&
+                emailadress.lastIndexOf(".") > emailadress.lastIndexOf("@"));
 
 
     }
