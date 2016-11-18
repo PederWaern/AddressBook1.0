@@ -1,9 +1,9 @@
 package com.hotmail.pederwaern;
 
 /**
- * Denna klass statiska metoder som används av
+ * Denna klass innehåller statiska metoder som används av
  * klasserna AdressBook och Register för att enkelt validera namnen och emailadressen i Contact.
- * Metoderna är inte helt tillförlitliga.
+ * OBS! Metoderna är inte helt tillförlitliga att validera!
  */
 public class WordChecker {
 
