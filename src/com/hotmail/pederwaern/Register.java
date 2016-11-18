@@ -77,7 +77,7 @@ public class Register implements Serializable{
     }
 
     /**
-     * Sökfunktionen tillämpar
+     * Sökfunktionen tillämpar "Starts with".
      * @param searchString
      */
     public void search (String searchString){
