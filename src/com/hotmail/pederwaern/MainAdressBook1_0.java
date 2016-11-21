@@ -9,7 +9,8 @@ public class MainAdressBook1_0 {
 
     public static void main(String[] args) throws IOException {
 
-        AddressBook adressBook = new AddressBook();
+        AddressBook addressBook = new AddressBook("register.data");
+        addressBook.start();
 
     }
 }

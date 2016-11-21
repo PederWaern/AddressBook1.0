@@ -24,7 +24,6 @@ public class Contact implements Serializable {
 
     }
 
-
     public String getId() {
         return id;
     }
@@ -79,4 +78,3 @@ public class Contact implements Serializable {
         this.email = email;
     }
 }
-

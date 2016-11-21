@@ -1,9 +1,7 @@
 package com.hotmail.pederwaern;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * Denna klass hanterar själva listan som kontakterna hamnar i, samt hanterar de metoder som användare gör
@@ -11,52 +9,36 @@ import java.util.Scanner;
  *
  * Created by pederwaern on 2016-11-16.
  */
-public class Register implements Serializable{
+public class Register implements Serializable {
 
-    public ArrayList<Contact> register;
+    public List<Contact> register;
 
-    public Register() {
-        this.register = new ArrayList<>();
+    public Register(List<Contact> register) {
+        this.register = register;
 
     }
 
-    public void add(String contactToAdd) {
-
+    public void add(String inputString) {
         //kommandot "add " tas bort från strängen och blanka tecken före och efter.
-        contactToAdd = contactToAdd.substring(InputCommand.ADD.length()+1, contactToAdd.length());
-        contactToAdd = contactToAdd.trim();
-
-        List<String> tempWordList = new ArrayList<>();
-        Scanner scanner = new Scanner(contactToAdd);
-
-        String firstName="";
-        String lastName="";
-        String email="";
-
-        //här kontrolleras så att inputen har rätt antal ord(3).
-
-        while (scanner.hasNext()) {
-            String word = scanner.next();
-            tempWordList.add(word);
+        String[] words = inputString.split(" ");
+        if (words.length != 4) {
+            System.out.println("ERROR- invalid amount of parameters");
+            return;
         }
-            if(tempWordList.size() == 3) {
-                firstName = tempWordList.get(0);
-                lastName = tempWordList.get(1);
-                email = tempWordList.get(2);
 
-                //kontroll så att namnen inte innnehåller siffror. Email adressen måste ha innehålla '.' och '@'.
+        String firstName = words[1];
+        String lastName = words[2];
+        String email = words[3];
 
-                if(WordChecker.isAWord(firstName) && WordChecker.isAWord(lastName) && WordChecker.isAnEmailAdress(email)) {
-                    register.add(new Contact(firstName, lastName, email));
-                }
-                else {
-                    System.out.println("ERROR - invalid format");
-                }
-            }
-            else {
-                System.out.println("ERROR- invalid amount of parameters");
+        // kontroll så att namnen inte innnehåller siffror. Email adressen måste ha innehålla '.' och '@'.
 
-            }
+        if (WordChecker.isWord(firstName)
+                && WordChecker.isWord(lastName)
+                && WordChecker.isEmailAddress(email)) {
+            register.add(new Contact(firstName, lastName, email));
+        } else {
+            System.out.println("ERROR - invalid format");
+        }
     }
 
     /**
@@ -89,16 +71,16 @@ public class Register implements Serializable{
 
         for (Contact contact: register)
         {
-            if (contact.getFirstName().toLowerCase().startsWith(searchString) ||
-                contact.getLastName().toLowerCase().startsWith(searchString) ||
-                contact.getEmail().toLowerCase().startsWith(searchString) ) {
+            if (contact.getFirstName().toLowerCase().startsWith(searchString)
+                    || contact.getLastName().toLowerCase().startsWith(searchString)
+                    || contact.getEmail().toLowerCase().startsWith(searchString) ) {
                 System.out.println(contact.searchResultToString());
                 stringFound = true;
             }
 
         }
 
-        if(!stringFound) {
+        if (!stringFound) {
             System.out.println("Entry not found");
         }
 

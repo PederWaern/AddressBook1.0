@@ -1,7 +1,7 @@
 package com.hotmail.pederwaern;
 
-
 import java.io.*;
+import java.util.ArrayList;
 
 /**
  * Programmet AddressBook hanterar personer i en adressbok. Attributen förnamn, efternamn och emailadress ska läggas
@@ -16,64 +16,57 @@ public class AddressBook {
 
     private Register register;
 
-    public AddressBook()  throws IOException  {
+    private String fileName;
 
-        run();
+    public AddressBook(String fileName)  throws IOException  {
+        this.fileName = fileName;
+        this.register = loadFromFile(fileName);
     }
 
-    private void run() throws IOException {
-
-        loadFromFile();
+    public void start() throws IOException {
         displayWelcome();
         takeInput();
-        saveToFile();
+        saveToFile(fileName);
         displayGoodbye();
 
     }
 
     /**
      * Metoden laddar reigstret från binärfil.
+     * @param fileName
      */
-    private void loadFromFile() {
-
-        this.register = new Register();
+    public Register loadFromFile(String fileName) {
 
         try {
-            FileInputStream fileIn = new FileInputStream("register.data");
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            register = (Register) in.readObject();
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName));
+            Register register = (Register) in.readObject();
             in.close();
-            fileIn.close();
-        } catch (IOException i) {
-            i.printStackTrace();
-
-        } catch (ClassNotFoundException c) {
-
-            c.printStackTrace();
-
+            return register;
+        } catch (FileNotFoundException e) {
+            return new Register(new ArrayList<>());
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
     }
 
     /**
      * Metoden sparar registret till binärfil.
+     * @param name
      */
-    private void saveToFile(){
+    private void saveToFile(String name){
 
         try {
-            FileOutputStream fileOut = new FileOutputStream("register.data");
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(name));
             out.writeObject(register);
             out.close();
-            fileOut.close();
         } catch (IOException i) {
             i.printStackTrace();
         }
 
     }
 
-    private void displayGoodbye(){
-
+    private void displayGoodbye() {
         System.out.println("Exiting program. Goodbye...");
     }
 
@@ -88,35 +81,46 @@ public class AddressBook {
      */
     private void takeInput() throws IOException {
         BufferedReader bufferedR = new BufferedReader(new InputStreamReader(System.in));
-        String input = "";
-
 
         while (true) {
-            input = bufferedR.readLine();
-            input = input.trim();
+            String input = bufferedR.readLine().trim();
 
-            if (input.length()> InputCommand.ADD.length() &&
-                    input.subSequence(0, (InputCommand.ADD.length() +1) ).equals(InputCommand.ADD + " ") ){
+            if (isAdd(input)) {
                 register.add(input);
-            }
-            else if (input.equals(InputCommand.LIST)) {
+            } else if (isList(input)) {
                 register.list();
-            }
-            else if (input.length()> InputCommand.SEARCH.length() &&
-                    input.subSequence(0, (InputCommand.SEARCH.length() +1) ).equals(InputCommand.SEARCH + " ")  ){
+            } else if (isSearch(input)){
                 register.search(input);
-
-            }
-            else if (input.equals(InputCommand.CLEAR)) {
+            } else if (isClear(input)) {
                 register.clear();
+            } else if (isQuit(input)){
+                break;
             }
-            else if (input.equals(InputCommand.QUIT)){
-                break;}
-
-
         }
         bufferedR.close();
 
+    }
+
+    private boolean isQuit(String input) {
+        return input.equals(InputCommand.QUIT);
+    }
+
+    private boolean isClear(String input) {
+        return input.equals(InputCommand.CLEAR);
+    }
+
+    private boolean isSearch(String input) {
+        String[] arguments = input.split(" ");
+        return arguments.length > 0 && arguments[0].equals(InputCommand.SEARCH);
+    }
+
+    private boolean isList(String input) {
+        return input.equals(InputCommand.LIST);
+    }
+
+    private boolean isAdd(String input) {
+        return input.length() > InputCommand.ADD.length()
+                && input.subSequence(0, (InputCommand.ADD.length() +1) ).equals(InputCommand.ADD + " ");
     }
 
 }
