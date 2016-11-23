@@ -44,9 +44,10 @@ public class AddressBook {
             return register;
         } catch (FileNotFoundException e) {
             return new Register(new ArrayList<>());
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (ClassNotFoundException | IOException e) {
             throw new RuntimeException(e);
         }
+
 
     }
 

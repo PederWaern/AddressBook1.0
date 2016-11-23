@@ -64,14 +64,15 @@ public class Register implements Serializable {
      */
     public void search (String searchString){
 
-        searchString = searchString.substring(InputCommand.SEARCH.length()+1, searchString.length());
-        searchString = searchString.trim();
-        searchString = searchString.toLowerCase();
+        searchString = searchString.substring(InputCommand.SEARCH.length()+1, searchString.length())
+                .trim()
+                .toLowerCase();
+
         boolean stringFound = false;
 
         for (Contact contact: register)
         {
-            if (contact.getFirstName().toLowerCase().startsWith(searchString)
+            if        (contact.getFirstName().toLowerCase().startsWith(searchString)
                     || contact.getLastName().toLowerCase().startsWith(searchString)
                     || contact.getEmail().toLowerCase().startsWith(searchString) ) {
                 System.out.println(contact.searchResultToString());

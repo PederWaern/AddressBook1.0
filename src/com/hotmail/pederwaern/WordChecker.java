@@ -30,8 +30,8 @@ public class WordChecker {
      */
     static boolean isEmailAddress(String emailadress) {
 
-        return ((emailadress.contains("@") && emailadress.contains(".")) &&
-                emailadress.lastIndexOf(".") > emailadress.lastIndexOf("@"));
+        return ((emailadress.contains("@") && emailadress.contains("."))
+                && emailadress.lastIndexOf(".") > emailadress.lastIndexOf("@"));
 
 
     }
