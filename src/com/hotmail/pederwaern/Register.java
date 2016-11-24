@@ -13,9 +13,11 @@ import java.util.List;
 public class Register implements Serializable  {
 
     public List<Contact> register;
+    private LoggerClass log;
 
     public Register(List<Contact> register) {
         this.register = register;
+        log = new LoggerClass();
 
     }
 

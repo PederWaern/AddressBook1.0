@@ -15,12 +15,17 @@ import java.util.ArrayList;
 public class AddressBook {
 
     private Register register;
+    private LoggerClass log;
+
 
     private String fileName;
 
     public AddressBook(String fileName)  throws IOException  {
+        log = new LoggerClass();
+        log.init();
         this.fileName = fileName;
         this.register = loadFromFile(fileName);
+
     }
 
     public void start() throws IOException {
@@ -43,11 +48,15 @@ public class AddressBook {
             in.close();
             return register;
         } catch (FileNotFoundException e) {
+            log.severeMessageToLog(e.getMessage());
             return new Register(new ArrayList<>());
         } catch (ClassNotFoundException | IOException e) {
+            log.severeMessageToLog(e.getMessage());
             throw new RuntimeException(e);
 
+
         }
+
 
     }
 
@@ -68,11 +77,12 @@ public class AddressBook {
     }
 
     private void displayGoodbye() {
+        log.infoMessageToLog("Program exited by user");
         System.out.println("Exiting program. Goodbye...");
     }
 
     private void displayWelcome() {
-
+        log.infoMessageToLog("Program started by user");
         System.out.println("Welcome!\nOptions: add\tlist\tsearch\thelp\tdelete\tquit");
     }
 
@@ -88,19 +98,26 @@ public class AddressBook {
 
             if (isAdd(input)) {
                 register.add(input);
+                log.fineMessageToLog("add typed");
             } else if (isList(input)) {
                 register.list();
+                log.fineMessageToLog("log typed");
             } else if (isSearch(input)){
                 register.search(input);
+                log.fineMessageToLog("search typed");
 //            } else if (isClear(input)) {
 //                register.clear();
             } else if (isHelp(input)){
+                log.fineMessageToLog("help typed");
                 register.help();
             } else if (isQuit(input)){
+                log.fineMessageToLog("quit typed");
                 break;
             } else if (isDelete(input)) {
+                log.fineMessageToLog("delete typed");
                 register.delete(input);
             } else {
+                log.fineMessageToLog("used typed invalid command");
                 System.out.println("Invalid command");
             }
         }

@@ -1,0 +1,34 @@
+nov 24, 2016 6:03:50 EM com.hotmail.pederwaern.LoggerClass infoMessageToLog
+INFO: Program started by user
+nov 24, 2016 6:03:52 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: log typed
+nov 24, 2016 6:04:01 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: add typed
+nov 24, 2016 6:04:02 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: log typed
+nov 24, 2016 6:04:04 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: quit typed
+nov 24, 2016 6:04:04 EM com.hotmail.pederwaern.LoggerClass infoMessageToLog
+INFO: Program exited by user
+nov 24, 2016 6:05:18 EM com.hotmail.pederwaern.LoggerClass infoMessageToLog
+INFO: Program started by user
+nov 24, 2016 6:05:20 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: log typed
+nov 24, 2016 6:05:27 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: search typed
+nov 24, 2016 6:05:30 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: log typed
+nov 24, 2016 6:05:39 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: add typed
+nov 24, 2016 6:05:40 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: log typed
+nov 24, 2016 6:05:42 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: quit typed
+nov 24, 2016 6:05:42 EM com.hotmail.pederwaern.LoggerClass infoMessageToLog
+INFO: Program exited by user
+nov 24, 2016 6:05:45 EM com.hotmail.pederwaern.LoggerClass infoMessageToLog
+INFO: Program started by user
+nov 24, 2016 6:05:47 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: quit typed
+nov 24, 2016 6:05:47 EM com.hotmail.pederwaern.LoggerClass infoMessageToLog
+INFO: Program exited by user
