@@ -32,3 +32,121 @@ nov 24, 2016 6:05:47 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
 FIN: quit typed
 nov 24, 2016 6:05:47 EM com.hotmail.pederwaern.LoggerClass infoMessageToLog
 INFO: Program exited by user
+nov 24, 2016 8:36:30 EM com.hotmail.pederwaern.LoggerClass infoMessageToLog
+INFO: Program started by user
+nov 24, 2016 8:36:34 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: add typed
+nov 24, 2016 8:36:35 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: log typed
+nov 24, 2016 8:36:46 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: delete typed
+nov 24, 2016 8:36:48 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: log typed
+nov 24, 2016 8:36:50 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: delete typed
+nov 24, 2016 8:36:54 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: delete typed
+nov 24, 2016 8:37:02 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: add typed
+nov 24, 2016 8:37:05 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: log typed
+nov 24, 2016 8:37:09 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: quit typed
+nov 24, 2016 8:37:09 EM com.hotmail.pederwaern.LoggerClass infoMessageToLog
+INFO: Program exited by user
+nov 24, 2016 8:44:50 EM com.hotmail.pederwaern.LoggerClass infoMessageToLog
+INFO: Program started by user
+nov 24, 2016 8:45:11 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: add typed
+nov 24, 2016 8:45:12 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: log typed
+nov 24, 2016 8:45:24 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: search typed
+nov 24, 2016 8:47:48 EM com.hotmail.pederwaern.LoggerClass infoMessageToLog
+INFO: Program started by user
+nov 24, 2016 8:47:51 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: log typed
+nov 24, 2016 8:47:59 EM com.hotmail.pederwaern.LoggerClass infoMessageToLog
+INFO: Program started by user
+nov 24, 2016 8:48:08 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: add typed
+nov 24, 2016 8:48:14 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: add typed
+nov 24, 2016 8:48:15 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: log typed
+nov 24, 2016 8:48:24 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: search typed
+nov 24, 2016 8:48:37 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: search typed
+nov 24, 2016 8:49:18 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: used typed invalid command
+nov 24, 2016 8:49:19 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: quit typed
+nov 24, 2016 8:49:19 EM com.hotmail.pederwaern.LoggerClass infoMessageToLog
+INFO: Program exited by user
+nov 24, 2016 8:49:41 EM com.hotmail.pederwaern.LoggerClass infoMessageToLog
+INFO: Program started by user
+nov 24, 2016 8:49:43 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: log typed
+nov 24, 2016 8:49:47 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: used typed invalid command
+nov 24, 2016 8:50:07 EM com.hotmail.pederwaern.LoggerClass severeMessageToLog
+ALLVARLIG: register.data (No such file or directory)
+nov 24, 2016 8:50:07 EM com.hotmail.pederwaern.LoggerClass infoMessageToLog
+INFO: Program started by user
+nov 24, 2016 8:50:11 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: log typed
+nov 24, 2016 8:50:23 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: add typed
+nov 24, 2016 8:50:32 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: add typed
+nov 24, 2016 8:50:37 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: add typed
+nov 24, 2016 8:50:40 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: log typed
+nov 24, 2016 8:50:44 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: search typed
+nov 24, 2016 8:53:27 EM com.hotmail.pederwaern.LoggerClass severeMessageToLog
+ALLVARLIG: register.data (No such file or directory)
+nov 24, 2016 8:53:27 EM com.hotmail.pederwaern.LoggerClass infoMessageToLog
+INFO: Program started by user
+nov 24, 2016 8:53:29 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: log typed
+nov 24, 2016 8:53:38 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: add typed
+nov 24, 2016 8:53:41 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: add typed
+nov 24, 2016 8:53:45 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: add typed
+nov 24, 2016 8:53:47 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: log typed
+nov 24, 2016 8:55:09 EM com.hotmail.pederwaern.LoggerClass severeMessageToLog
+ALLVARLIG: register.data (No such file or directory)
+nov 24, 2016 8:55:09 EM com.hotmail.pederwaern.LoggerClass infoMessageToLog
+INFO: Program started by user
+nov 24, 2016 8:55:11 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: log typed
+nov 24, 2016 8:55:18 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: add typed
+nov 24, 2016 8:55:23 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: add typed
+nov 24, 2016 8:55:28 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: add typed
+nov 24, 2016 8:55:31 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: search typed
+nov 24, 2016 8:55:37 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: log typed
+nov 24, 2016 8:55:53 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: delete typed
+nov 24, 2016 8:55:56 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: log typed
+nov 24, 2016 8:55:59 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: quit typed
+nov 24, 2016 8:55:59 EM com.hotmail.pederwaern.LoggerClass infoMessageToLog
+INFO: Program exited by user
+nov 24, 2016 8:56:34 EM com.hotmail.pederwaern.LoggerClass infoMessageToLog
+INFO: Program started by user
+nov 24, 2016 8:56:43 EM com.hotmail.pederwaern.LoggerClass fineMessageToLog
+FIN: quit typed
+nov 24, 2016 8:56:43 EM com.hotmail.pederwaern.LoggerClass infoMessageToLog
+INFO: Program exited by user

@@ -1,6 +1,7 @@
 package com.hotmail.pederwaern;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -54,10 +55,11 @@ public class Register implements Serializable  {
             return;
         }
 
-        //sorterar listan
-        Collections.sort(register, new FirstNameComparator());
-
-        for (Contact c: register
+        //skapar en kopia av registret och sorterar kontakterna på förnamn.
+        List<Contact> sortedList = new ArrayList<>();
+        sortedList.addAll(register);
+        Collections.sort(sortedList, new FirstNameComparator());
+        for (Contact c: sortedList
              ) {
             System.out.println(c);
         }
@@ -82,22 +84,28 @@ public class Register implements Serializable  {
                 .toLowerCase();
 
         boolean stringFound = false;
+        List<Contact> listOfFoundEntries = new ArrayList<>();
 
-        //sorterar listan
-        Collections.sort(register, new FirstNameComparator());
 
-        for (Contact contact: register)
-        {
+        for (Contact contact: register) {
             if        (contact.getFirstName().toLowerCase().startsWith(searchString)
                     || contact.getLastName().toLowerCase().startsWith(searchString)
                     || contact.getEmail().toLowerCase().startsWith(searchString) ) {
-                System.out.println(contact.searchResultToString());
+
+                listOfFoundEntries.add(contact);
                 stringFound = true;
             }
 
         }
+        //om söksträngen hittats skriv ut de kontakter som matchar i bokstavsordning
+        if (stringFound) {
+            Collections.sort(listOfFoundEntries, new FirstNameComparator());
+            for (Contact contact: listOfFoundEntries) {
+                System.out.println(contact.searchResultToString());
+            }
 
-        if (!stringFound) {
+
+        } else {
             System.out.println("Entry not found");
         }
 
@@ -118,7 +126,7 @@ public class Register implements Serializable  {
 
     public void delete(String deleteString) {
         String trimmedDeleteString = deleteString.trim();
-        String[] arguments = deleteString.split(" ");
+        String[] arguments = trimmedDeleteString.split(" ");
 
         if (arguments.length != 2) {
             System.out.println("Invalid amount of parameters");
