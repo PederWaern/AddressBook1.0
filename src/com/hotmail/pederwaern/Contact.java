@@ -7,7 +7,7 @@ import java.util.UUID;
  * Contact är en kontakt i en adressbok som innehåller ID(UUID), förnamn, efternamn och emailadress.
  *
  */
-public class Contact implements Serializable {
+public class Contact implements Serializable{
 
 
     private String id;
@@ -77,4 +77,6 @@ public class Contact implements Serializable {
     private void setEmail(String email) {
         this.email = email;
     }
+
+
 }

@@ -46,8 +46,8 @@ public class AddressBook {
             return new Register(new ArrayList<>());
         } catch (ClassNotFoundException | IOException e) {
             throw new RuntimeException(e);
-        }
 
+        }
 
     }
 
@@ -73,7 +73,7 @@ public class AddressBook {
 
     private void displayWelcome() {
 
-        System.out.println("Welcome!\nOptions: add\tlist\tsearch\tquit");
+        System.out.println("Welcome!\nOptions: add\tlist\tsearch\thelp\tdelete\tquit");
     }
 
     /**
@@ -92,14 +92,26 @@ public class AddressBook {
                 register.list();
             } else if (isSearch(input)){
                 register.search(input);
-            } else if (isClear(input)) {
-                register.clear();
+//            } else if (isClear(input)) {
+//                register.clear();
+            } else if (isHelp(input)){
+                register.help();
             } else if (isQuit(input)){
                 break;
+            } else if (isDelete(input)) {
+                register.delete(input);
+            } else {
+                System.out.println("Invalid command");
             }
         }
         bufferedR.close();
 
+    }
+
+    private boolean isDelete(String input) {
+
+        String[] arguments = input.split(" ");
+        return arguments.length > 0 && arguments[0].equals(InputCommand.DELETE);
     }
 
     private boolean isQuit(String input) {
@@ -123,6 +135,11 @@ public class AddressBook {
         return input.length() > InputCommand.ADD.length()
                 && input.subSequence(0, (InputCommand.ADD.length() +1) ).equals(InputCommand.ADD + " ");
     }
+
+    private boolean isHelp(String input) {
+        return input.equals(InputCommand.HELP);
+    }
+
 
 }
 

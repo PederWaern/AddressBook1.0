@@ -1,6 +1,7 @@
 package com.hotmail.pederwaern;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  *
  * Created by pederwaern on 2016-11-16.
  */
-public class Register implements Serializable {
+public class Register implements Serializable  {
 
     public List<Contact> register;
 
@@ -36,6 +37,7 @@ public class Register implements Serializable {
                 && WordChecker.isWord(lastName)
                 && WordChecker.isEmailAddress(email)) {
             register.add(new Contact(firstName, lastName, email));
+            System.out.println("Contact has been added");
         } else {
             System.out.println("ERROR - invalid format");
         }
@@ -50,11 +52,13 @@ public class Register implements Serializable {
             return;
         }
 
+        //sorterar listan
+        Collections.sort(register, new FirstNameComparator());
+
         for (Contact c: register
              ) {
             System.out.println(c);
         }
-
 
     }
 
@@ -64,11 +68,21 @@ public class Register implements Serializable {
      */
     public void search (String searchString){
 
+        String[] arguments = searchString.split(" ");
+
+        //kollar att antalet ord är rätt
+        if (arguments.length != 2) {
+            System.out.println("Invalid amount of parameters");
+            return;
+        }
         searchString = searchString.substring(InputCommand.SEARCH.length()+1, searchString.length())
                 .trim()
                 .toLowerCase();
 
         boolean stringFound = false;
+
+        //sorterar listan
+        Collections.sort(register, new FirstNameComparator());
 
         for (Contact contact: register)
         {
@@ -89,8 +103,46 @@ public class Register implements Serializable {
 
     //OBS! Ej officielt implementerad i UI ännu.
 
-    public void clear () {
+    /*public void clear () {
         register.clear();
+    }*/
+
+    public void help() {
+        System.out.println("add\t\t-- Adds a new contact");
+        System.out.println("delete\t-- Deletes a contact");
+        System.out.println("list\t-- Lists all contacts");
+        System.out.println("help\t -- Show help");
+    }
+
+    public void delete(String deleteString) {
+        String trimmedDeleteString = deleteString.trim();
+        String[] arguments = deleteString.split(" ");
+
+        if (arguments.length != 2) {
+            System.out.println("Invalid amount of parameters");
+            return;
+        }
+
+        boolean contactFound = false;
+        int contactIndex=0;
+
+
+        // TODO - Gör om till vanlig for loop för att slippa gå igenom hela listan om UUID redan är hittat
+
+        for (Contact contact: register) {
+            if (contact.getId().equals(arguments[1]) ){
+                contactFound = true;
+                contactIndex = register.indexOf(contact);
+            }
+        }
+        if (contactFound) {
+            System.out.println("Entry" + register.get(contactIndex).getId() + "has been deleted.");
+            register.remove(contactIndex);
+        } else {
+            System.out.println("Entry not found");
+        }
+
+
     }
 }
 
