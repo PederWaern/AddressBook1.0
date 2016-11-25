@@ -4,14 +4,14 @@ package com.hotmail.pederwaern;
 
 /**
  * Created by pederwaern on 2016-11-24.
+ * Loggclass
  */
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.Serializable;
-import java.util.logging.*;
+import java.util.logging.LogManager;
 
-public class LoggerClass implements Serializable {
+public class LoggerClass  {
 
 
     public static void setupLogging() {

@@ -1,3 +1,19 @@
-2016-11-25 13:17:51 INFO   com.hotmail.pederwaern.AddressBook displayWelcome - Program started by user
-2016-11-25 13:17:54 FIN    com.hotmail.pederwaern.AddressBook takeInput - quit typed
-2016-11-25 13:17:54 INFO   com.hotmail.pederwaern.AddressBook displayGoodbye - Program exited by user
+2016-11-25 13:44:35 INFO   com.hotmail.pederwaern.AddressBook displayWelcome - Program started by user
+2016-11-25 13:44:39 FIN    com.hotmail.pederwaern.AddressBook takeInput - log typed
+2016-11-25 13:44:45 INFO   com.hotmail.pederwaern.Register add - Contact added to Adressbook by user
+2016-11-25 13:44:45 FIN    com.hotmail.pederwaern.AddressBook takeInput - add typed
+2016-11-25 13:44:49 INFO   com.hotmail.pederwaern.Register search - User searched the register
+2016-11-25 13:44:49 FIN    com.hotmail.pederwaern.AddressBook takeInput - search typed
+2016-11-25 13:44:50 INFO   com.hotmail.pederwaern.Register list - User lists contacts in Adressbook
+2016-11-25 13:44:50 FIN    com.hotmail.pederwaern.AddressBook takeInput - log typed
+2016-11-25 13:44:56 INFO   com.hotmail.pederwaern.Register add - Contact added to Adressbook by user
+2016-11-25 13:44:56 FIN    com.hotmail.pederwaern.AddressBook takeInput - add typed
+2016-11-25 13:44:57 INFO   com.hotmail.pederwaern.Register list - User lists contacts in Adressbook
+2016-11-25 13:44:57 INFO   com.hotmail.pederwaern.Register list - User lists contacts in Adressbook
+2016-11-25 13:44:57 FIN    com.hotmail.pederwaern.AddressBook takeInput - log typed
+2016-11-25 13:45:04 FIN    com.hotmail.pederwaern.AddressBook takeInput - delete typed
+2016-11-25 13:45:04 INFO   com.hotmail.pederwaern.Register delete - User deleted the entry: edba9c36-fdf3
+2016-11-25 13:45:05 INFO   com.hotmail.pederwaern.Register list - User lists contacts in Adressbook
+2016-11-25 13:45:05 FIN    com.hotmail.pederwaern.AddressBook takeInput - log typed
+2016-11-25 13:45:07 FIN    com.hotmail.pederwaern.AddressBook takeInput - quit typed
+2016-11-25 13:45:07 INFO   com.hotmail.pederwaern.AddressBook displayGoodbye - Program exited by user
