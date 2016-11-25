@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Denna klass hanterar själva listan som kontakterna hamnar i, samt hanterar de metoder som användare gör
@@ -13,12 +14,13 @@ import java.util.List;
  */
 public class Register implements Serializable  {
 
+    private static final Logger logger = Logger.getLogger(Register.class.getName());
     public List<Contact> register;
-    private LoggerClass log;
+
+
 
     public Register(List<Contact> register) {
         this.register = register;
-        log = new LoggerClass();
 
     }
 
@@ -41,6 +43,7 @@ public class Register implements Serializable  {
                 && WordChecker.isEmailAddress(email)) {
             register.add(new Contact(firstName, lastName, email));
             System.out.println("Contact has been added");
+            logger.info("Contact added to Adressbook by user");
         } else {
             System.out.println("ERROR - invalid format");
         }
@@ -59,9 +62,11 @@ public class Register implements Serializable  {
         List<Contact> sortedList = new ArrayList<>();
         sortedList.addAll(register);
         Collections.sort(sortedList, new FirstNameComparator());
+
         for (Contact c: sortedList
              ) {
             System.out.println(c);
+            logger.info("User lists contacts in Adressbook");
         }
 
     }
@@ -85,7 +90,7 @@ public class Register implements Serializable  {
 
         boolean stringFound = false;
         List<Contact> listOfFoundEntries = new ArrayList<>();
-
+        logger.info("User searched the register");
 
         for (Contact contact: register) {
             if        (contact.getFirstName().toLowerCase().startsWith(searchString)
@@ -104,7 +109,6 @@ public class Register implements Serializable  {
                 System.out.println(contact.searchResultToString());
             }
 
-
         } else {
             System.out.println("Entry not found");
         }
@@ -122,6 +126,7 @@ public class Register implements Serializable  {
         System.out.println("delete\t-- Deletes a contact");
         System.out.println("list\t-- Lists all contacts");
         System.out.println("help\t -- Show help");
+        logger.info("User displayed help menu");
     }
 
     public void delete(String deleteString) {
@@ -146,8 +151,10 @@ public class Register implements Serializable  {
             }
         }
         if (contactFound) {
-            System.out.println("Entry" + register.get(contactIndex).getId() + "has been deleted.");
+            System.out.println("Entry: " + register.get(contactIndex).getId() + "has been deleted.");
+            logger.info("User deleted the entry: " + register.get(contactIndex).getId());
             register.remove(contactIndex);
+
         } else {
             System.out.println("Entry not found");
         }
