@@ -63,9 +63,9 @@ public class Register implements Serializable  {
         sortedList.addAll(register);
         Collections.sort(sortedList, new FirstNameComparator());
 
-        for (Contact c: sortedList
+        for (Contact contact: sortedList
              ) {
-            System.out.println(c);
+            System.out.println(contact);
             logger.info("User lists contacts in Adressbook");
         }
 

@@ -30,9 +30,14 @@ public class AddressBook {
 
     public void start() throws IOException {
         displayWelcome();
+        runAutosaver();
         takeInput();
         saveToFile(fileName);
         displayGoodbye();
+        logger.info("program saved before quitting...");
+        //TODO Fixa till snyggare avslutning av autosave threaden. inte använda system out...?
+        //TODO Logga autosave och vanlig save på olika sätt.
+        System.exit(0);
 
     }
 
@@ -64,7 +69,7 @@ public class AddressBook {
      * Metoden sparar registret till binärfil.
      * @param name
      */
-    private void saveToFile(String name){
+    private synchronized void saveToFile(String name){
 
         try {
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(name));
@@ -73,6 +78,7 @@ public class AddressBook {
         } catch (IOException i) {
             i.printStackTrace();
         }
+
 
     }
 
@@ -86,6 +92,10 @@ public class AddressBook {
         System.out.println("Welcome!\nOptions: add\tlist\tsearch\thelp\tdelete\tquit");
     }
 
+    private void runAutosaver() {
+        Thread autosave = new Thread(new Autosaver());
+        autosave.start();
+    }
     /**
      * Denna metod hanterar användarens input. Kommandon ska skrivas med små bokstäver och är case-sensitive.
      * @throws IOException
@@ -158,6 +168,22 @@ public class AddressBook {
     }
 
 
+    private class Autosaver implements Runnable {
+
+        @Override
+        public void run() {
+            while(true) {
+                saveToFile(fileName);
+                try {
+                    Thread.sleep(5 * 1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                logger.info("Autosave done");
+            }
+
+        }
+    }
 }
 
 

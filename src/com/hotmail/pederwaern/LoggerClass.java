@@ -13,7 +13,6 @@ import java.util.logging.LogManager;
 
 public class LoggerClass  {
 
-
     public static void setupLogging() {
         String loggingFilePath = "/Users/pederwaern/IdeaProjects/AdressBokVersion1.0/src/com/hotmail/pederwaern/" +
                 "logging.properties";
