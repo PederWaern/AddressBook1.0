@@ -15,13 +15,10 @@ import java.util.logging.Logger;
 public class Register implements Serializable  {
 
     private static final Logger logger = Logger.getLogger(Register.class.getName());
-    public List<Contact> register;
-
-
+    private List<Contact> register;
 
     public Register(List<Contact> register) {
         this.register = register;
-
     }
 
     public void add(String inputString) {
@@ -65,10 +62,10 @@ public class Register implements Serializable  {
 
         for (Contact contact: sortedList
              ) {
-            System.out.println(contact);
-            logger.info("User lists contacts in Adressbook");
-        }
+            System.out.println(listResultFormat(contact));
 
+        }
+        logger.info("User lists contacts in Adressbook");
     }
 
     /**
@@ -106,7 +103,7 @@ public class Register implements Serializable  {
         if (stringFound) {
             Collections.sort(listOfFoundEntries, new FirstNameComparator());
             for (Contact contact: listOfFoundEntries) {
-                System.out.println(contact.searchResultToString());
+                System.out.println(searchResultFormat(contact));
             }
 
         } else {
@@ -139,13 +136,12 @@ public class Register implements Serializable  {
         }
 
         boolean contactFound = false;
-        int contactIndex=0;
-
+        int contactIndex = 0;
 
         // TODO - Gör om till vanlig for loop för att slippa gå igenom hela listan om UUID redan är hittat
 
-        for (Contact contact: register) {
-            if (contact.getId().equals(arguments[1]) ){
+        for (Contact contact : register) {
+            if (contact.getId().equals(arguments[1])) {
                 contactFound = true;
                 contactIndex = register.indexOf(contact);
             }
@@ -155,11 +151,21 @@ public class Register implements Serializable  {
             logger.info("User deleted the entry: " + register.get(contactIndex).getId());
             register.remove(contactIndex);
 
+
         } else {
             System.out.println("Entry not found");
         }
+    }
 
+    private String searchResultFormat (Contact contact) {
+        return contact.getId() + " " + contact.getFirstName() + " " + contact.getLastName() + " " + contact.getEmail();
+    }
 
+    private String listResultFormat (Contact contact){
+        return "Id:" + contact.getId() + "\n" +
+                "Firstname: " + contact.getFirstName() + "\n" +
+                "Lastname: " + contact.getLastName() + "\n" +
+                "Mailadress:" + contact.getEmail() + "\n";
     }
 }
 

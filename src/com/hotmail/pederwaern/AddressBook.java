@@ -19,10 +19,9 @@ public class AddressBook {
     private Register register;
     private static final Logger logger = Logger.getLogger(AddressBook.class.getName());
 
-
     private String fileName;
 
-    public AddressBook(String fileName)  throws IOException  {
+    public AddressBook(String fileName) throws IOException  {
         this.fileName = fileName;
         this.register = loadFromFile(fileName);
 
@@ -34,11 +33,8 @@ public class AddressBook {
         takeInput();
         saveToFile(fileName);
         displayGoodbye();
-        logger.info("program saved before quitting...");
         //TODO Fixa till snyggare avslutning av autosave threaden. inte använda system out...?
-        //TODO Logga autosave och vanlig save på olika sätt.
         System.exit(0);
-
     }
 
     /**
@@ -53,13 +49,12 @@ public class AddressBook {
             in.close();
             return register;
         } catch (FileNotFoundException e) {
-            logger.log(Level.SEVERE, "No binary file found to loud, new empty register ", e);
-
+            logger.log(Level.SEVERE, "No binary file found to loud, creating new empty register", e);
+            // TODO skapa metod för raden nedan.
             return new Register(new ArrayList<>());
         } catch (ClassNotFoundException | IOException e) {
             logger.log(Level.SEVERE, "Class not found or IO exception", e);
             throw new RuntimeException(e);
-
 
         }
 
@@ -75,11 +70,11 @@ public class AddressBook {
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(name));
             out.writeObject(register);
             out.close();
+            logger.info("File saved");
         } catch (IOException i) {
             i.printStackTrace();
+            logger.log(Level.SEVERE, "IO exception", i);
         }
-
-
     }
 
     private void displayGoodbye() {
@@ -92,9 +87,16 @@ public class AddressBook {
         System.out.println("Welcome!\nOptions: add\tlist\tsearch\thelp\tdelete\tquit");
     }
 
+    private void stopAutoSaver(Autosaver a) {
+
+    }
+
     private void runAutosaver() {
-        Thread autosave = new Thread(new Autosaver());
-        autosave.start();
+        Autosaver autosaver = new Autosaver();
+        Thread autosaverThread = new Thread(autosaver);
+        autosaverThread.start();
+
+
     }
     /**
      * Denna metod hanterar användarens input. Kommandon ska skrivas med små bokstäver och är case-sensitive.
@@ -167,20 +169,21 @@ public class AddressBook {
         return input.equals(InputCommand.HELP);
     }
 
-
     private class Autosaver implements Runnable {
+
+        boolean keepLooping = true;
 
         @Override
         public void run() {
-            while(true) {
-                saveToFile(fileName);
-                try {
-                    Thread.sleep(5 * 1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                logger.info("Autosave done");
+            while(keepLooping) {
+            logger.info("Autosaving");
+            saveToFile(fileName);
+            try {
+                Thread.sleep(5 * 1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+        }
 
         }
     }

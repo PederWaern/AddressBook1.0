@@ -52,14 +52,12 @@ public class Contact implements Serializable{
 
     @Override
     public String toString() {
-        return "Id:" + getId() + "\n" +
-                "Firstname: " + getFirstName() + "\n" +
-                "Lastname: " + getLastName() + "\n" +
-                "Mailadress:" + getEmail() + "\n";
-    }
-
-    public String searchResultToString() {
-        return getId() + " " + getFirstName() + " " + getLastName() + " " + getEmail();
+        return "Contact{" +
+                "id='" + id + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 
     public void setId(String id) {

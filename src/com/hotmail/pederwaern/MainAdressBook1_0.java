@@ -11,7 +11,6 @@ public class MainAdressBook1_0 {
         LoggerClass.setupLogging();
         AddressBook addressBook = new AddressBook("register.data");
         addressBook.start();
-
     }
 
 }
