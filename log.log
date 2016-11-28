@@ -1,6 +1,6 @@
-2016-11-28 15:40:33 INFO   com.hotmail.pederwaern.AddressBookApp displayWelcome - Program started by user
-2016-11-28 15:40:33 INFO   com.hotmail.pederwaern.AddressBookApp$Autosaver run - Autosaving
-2016-11-28 15:40:33 INFO   com.hotmail.pederwaern.AddressBookApp saveToFile - File saved
-2016-11-28 15:40:37 FIN    com.hotmail.pederwaern.AddressBookApp takeInput - quit typed
-2016-11-28 15:40:37 INFO   com.hotmail.pederwaern.AddressBookApp saveToFile - File saved
-2016-11-28 15:40:37 INFO   com.hotmail.pederwaern.AddressBookApp displayGoodbye - Program exited by user
+2016-11-28 20:57:23 INFO   com.hotmail.pederwaern.MessageDisplayer displayWelcome - Program started by user
+2016-11-28 20:57:23 INFO   com.hotmail.pederwaern.AutoSaver run - Autosaving
+2016-11-28 20:57:23 INFO   com.hotmail.pederwaern.FileManager saveToFile - File saved
+2016-11-28 20:57:26 FIN    com.hotmail.pederwaern.CommandHandler takeInput - quit typed
+2016-11-28 20:57:26 INFO   com.hotmail.pederwaern.FileManager saveToFile - File saved
+2016-11-28 20:57:26 INFO   com.hotmail.pederwaern.MessageDisplayer displayGoodbye - Program exited by user

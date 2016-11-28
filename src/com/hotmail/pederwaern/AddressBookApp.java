@@ -1,10 +1,7 @@
 package com.hotmail.pederwaern;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.logging.Level;
+import java.io.IOException;
 import java.util.logging.Logger;
-
 
 
 /**
@@ -18,167 +15,37 @@ import java.util.logging.Logger;
  */
 public class AddressBookApp {
 
-    public RegisterHandler regHandler;
+    private RegisterHandler regHandler;
+    private CommandHandler commandHandler;
+    private MessageDisplayer messageDisplayer;
+    private AutoSaver autosaver;
+    private Thread autosaveThread;
+    private FileManager fileManager;
     private Register register;
+
     private static final Logger logger = Logger.getLogger(AddressBookApp.class.getName());
 
-    private String fileName;
-
     public AddressBookApp(String fileName) throws IOException  {
-        this.fileName = fileName;
-        this.register = loadFromFile(fileName);
+
+        fileManager = new FileManager(fileName);
+        register = fileManager.loadFromFile();
+        regHandler = new RegisterHandler(register);
+        commandHandler = new CommandHandler(regHandler);
+        autosaver = new AutoSaver(regHandler.getRegister(), fileManager);
+        autosaveThread = new Thread(autosaver);
+        messageDisplayer = new MessageDisplayer();
 
     }
 
     public void start() throws IOException {
-        regHandler = new RegisterHandler(register.getRegister());
-        displayWelcome();
-        Autosaver autosaver = new Autosaver();
-        Thread autosaveThread = new Thread(autosaver);
+        messageDisplayer.displayWelcome();
         autosaveThread.start();
-        takeInput();
+        commandHandler.takeInput();
         autosaver.stop();
-        saveToFile(fileName);
-        autosaver.stop();
-        displayGoodbye();
+        fileManager.saveToFile(regHandler.getRegister());
+        messageDisplayer.displayGoodbye();
     }
 
-    /**
-     * Metoden laddar reigstret från binärfil.
-     * @param fileName
-     */
-    public Register loadFromFile(String fileName) {
-
-        try {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName));
-            Register register = (Register) in.readObject();
-            in.close();
-            return register;
-        } catch (FileNotFoundException e) {
-            logger.log(Level.SEVERE, "No binary file found to loud, creating new empty register", e);
-            return new Register(new ArrayList<>());
-        } catch (ClassNotFoundException | IOException e) {
-            logger.log(Level.SEVERE, "Class not found or IO exception", e);
-            throw new RuntimeException(e);
-
-        }
-
-    }
-
-    /**
-     * Metoden sparar registret till binärfil.
-     * @param name
-     */
-    private synchronized void saveToFile(String name){
-
-        try {
-            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(name));
-            out.writeObject(register);
-            out.close();
-            logger.info("File saved");
-        } catch (IOException i) {
-            i.printStackTrace();
-            logger.log(Level.SEVERE, "IO exception", i);
-        }
-    }
-
-    private void displayGoodbye() {
-        logger.info("Program exited by user");
-        System.out.println("Exiting program. Goodbye...");
-    }
-
-    private void displayWelcome() {
-        logger.info("Program started by user");
-        System.out.println("Welcome!\nOptions: add\tlist\tsearch\thelp\tdelete\tquit");
-    }
-
-    /**
-     * Denna metod hanterar användarens input. Kommandon ska skrivas med små bokstäver och är case-sensitive.
-     * @throws IOException
-     */
-    private void takeInput() throws IOException {
-        BufferedReader bufferedR = new BufferedReader(new InputStreamReader(System.in));
-
-        while (true) {
-            String input = bufferedR.readLine().trim();
-
-            if (isAdd(input)) {
-                regHandler.add(input);
-                logger.fine("add typed");
-            } else if (isList(input)) {
-                regHandler.list();
-                logger.fine("log typed");
-            } else if (isSearch(input)){
-                regHandler.search(input);
-                logger.fine("search typed");
-//            } else if (isClear(input)) {
-//                register.clear();
-            } else if (isHelp(input)){
-                logger.fine("help typed");
-                regHandler.help();
-            } else if (isQuit(input)){
-                logger.fine("quit typed");
-                break;
-            } else if (isDelete(input)) {
-                logger.fine("delete typed");
-                regHandler.delete(input);
-            } else {
-                logger.fine("used typed invalid command");
-                System.out.println("Invalid command");
-            }
-        }
-        bufferedR.close();
-
-    }
-
-    private boolean isDelete(String input) {
-
-        String[] arguments = input.split(" ");
-        return arguments.length > 0 && arguments[0].equals(InputCommand.DELETE);
-    }
-    private boolean isQuit(String input) {
-        return input.equals(InputCommand.QUIT);
-    }
-
-    private boolean isSearch(String input) {
-        String[] arguments = input.split(" ");
-        return arguments.length > 0 && arguments[0].equals(InputCommand.SEARCH);
-    }
-
-    private boolean isList(String input) {
-        return input.equals(InputCommand.LIST);
-    }
-
-    private boolean isAdd(String input) {
-        return input.length() > InputCommand.ADD.length()
-                && input.subSequence(0, (InputCommand.ADD.length() +1) ).equals(InputCommand.ADD + " ");
-    }
-
-    private boolean isHelp(String input) {
-        return input.equals(InputCommand.HELP);
-    }
-
-    private class Autosaver implements Runnable {
-
-        boolean keepLooping = true;
-
-        @Override
-        public void run() {
-            while(keepLooping) {
-                logger.info("Autosaving");
-                saveToFile(fileName);
-                try {
-                    Thread.sleep(5 * 1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        public void stop() {
-            keepLooping = false;
-        }
-    }
 }
 
 

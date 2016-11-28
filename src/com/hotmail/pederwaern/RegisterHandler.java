@@ -11,10 +11,14 @@ import java.util.logging.Logger;
 public class RegisterHandler {
 
     private static final Logger logger = Logger.getLogger(Register.class.getName());
-    private List<Contact> register;
+    private Register register;
 
-    public RegisterHandler(List<Contact> register) {
+     public RegisterHandler(Register register) {
         this.register = register;
+    }
+
+    public Register getRegister() {
+        return register;
     }
 
     public void add(String inputString) {
@@ -29,7 +33,7 @@ public class RegisterHandler {
         String lastName = words[2];
         String email = words[3];
 
-        register.add(new Contact(firstName, lastName, email));
+        register.getRegister().add(new Contact(firstName, lastName, email));
         System.out.println("Contact has been added");
         logger.info("Contact added to Adressbook by user");
     }
@@ -39,14 +43,14 @@ public class RegisterHandler {
      * Listar alla kontakter i adressboken.
      */
     public void list() {
-        if (register.size()==0){
+        if (register.getRegister().size()==0){
             System.out.println("Adressbook is empty.");
             return;
         }
 
         //skapar en kopia av registret och sorterar kontakterna på förnamn.
         List<Contact> sortedList = new ArrayList<>();
-        sortedList.addAll(register);
+        sortedList.addAll(register.getRegister());
         Collections.sort(sortedList, new FirstNameComparator());
 
         for (Contact contact: sortedList
@@ -78,7 +82,7 @@ public class RegisterHandler {
         List<Contact> listOfFoundEntries = new ArrayList<>();
         logger.info("User searched the register");
 
-        for (Contact contact: register) {
+        for (Contact contact: register.getRegister()) {
             if        (contact.getFirstName().toLowerCase().startsWith(searchString)
                     || contact.getLastName().toLowerCase().startsWith(searchString)
                     || contact.getEmail().toLowerCase().startsWith(searchString) ) {
@@ -129,12 +133,12 @@ public class RegisterHandler {
         boolean contactFound = false;
 
         // söker efter strängen i registret och avbryter loopen om id har hittats.
-        for (int i = 0; i < register.size(); i++) {
-            if (register.get(i).getId().equals(arguments[1])) {
-                register.remove(i);
+        for (int i = 0; i < register.getRegister().size(); i++) {
+            if (register.getRegister().get(i).getId().equals(arguments[1])) {
+                register.getRegister().remove(i);
                 contactFound = true;
                 //bryt loop
-                i = register.size();
+                i = register.getRegister().size();
             }
 
         }
