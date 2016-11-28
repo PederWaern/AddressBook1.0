@@ -1,6 +1,10 @@
 package com.hotmail.pederwaern;
 
 /**
+ *
+ * EJ IMPLEMENTERAD!
+ *
+ *
  * Denna klass innehåller statiska metoder som används av
  * klasserna AdressBook och Register för att enkelt validera namnen och emailadressen i Contact.
  * OBS! Metoderna är inte helt tillförlitliga att validera!

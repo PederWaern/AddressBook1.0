@@ -33,18 +33,11 @@ public class Register implements Serializable  {
         String lastName = words[2];
         String email = words[3];
 
-        // kontroll så att namnen inte innnehåller siffror. Email adressen måste ha innehålla '.' och '@'.
-
-        if (WordChecker.isWord(firstName)
-                && WordChecker.isWord(lastName)
-                && WordChecker.isEmailAddress(email)) {
-            register.add(new Contact(firstName, lastName, email));
-            System.out.println("Contact has been added");
-            logger.info("Contact added to Adressbook by user");
-        } else {
-            System.out.println("ERROR - invalid format");
-        }
+        register.add(new Contact(firstName, lastName, email));
+        System.out.println("Contact has been added");
+        logger.info("Contact added to Adressbook by user");
     }
+
 
     /**
      * Listar alla kontakter i adressboken.

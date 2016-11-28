@@ -12,7 +12,6 @@ public class InputCommand {
     static final String LIST = "list";
     static final String SEARCH = "search";
     static final String QUIT = "quit";
-    static final String CLEAR = "clear";
     static final String DELETE = "delete";
     static final String HELP = "help";
 }

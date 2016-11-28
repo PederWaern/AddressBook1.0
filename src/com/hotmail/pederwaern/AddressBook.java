@@ -29,12 +29,16 @@ public class AddressBook {
 
     public void start() throws IOException {
         displayWelcome();
-        runAutosaver();
+
+        Autosaver autosaver = new Autosaver();
+        Thread autosaveThread = new Thread(autosaver);
+        autosaveThread.start();
+
         takeInput();
+        autosaver.stop();
         saveToFile(fileName);
+        autosaver.stop();
         displayGoodbye();
-        //TODO Fixa till snyggare avslutning av autosave threaden. inte använda system out...?
-        System.exit(0);
     }
 
     /**
@@ -91,13 +95,13 @@ public class AddressBook {
 
     }
 
-    private void runAutosaver() {
+    /*private void runAutosaver() {
         Autosaver autosaver = new Autosaver();
         Thread autosaverThread = new Thread(autosaver);
         autosaverThread.start();
 
 
-    }
+    }*/
     /**
      * Denna metod hanterar användarens input. Kommandon ska skrivas med små bokstäver och är case-sensitive.
      * @throws IOException
@@ -142,13 +146,8 @@ public class AddressBook {
         String[] arguments = input.split(" ");
         return arguments.length > 0 && arguments[0].equals(InputCommand.DELETE);
     }
-
     private boolean isQuit(String input) {
         return input.equals(InputCommand.QUIT);
-    }
-
-    private boolean isClear(String input) {
-        return input.equals(InputCommand.CLEAR);
     }
 
     private boolean isSearch(String input) {
@@ -176,15 +175,18 @@ public class AddressBook {
         @Override
         public void run() {
             while(keepLooping) {
-            logger.info("Autosaving");
-            saveToFile(fileName);
-            try {
-                Thread.sleep(5 * 1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                logger.info("Autosaving");
+                saveToFile(fileName);
+                try {
+                    Thread.sleep(5 * 1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
+        public void stop() {
+            keepLooping = false;
         }
     }
 }
