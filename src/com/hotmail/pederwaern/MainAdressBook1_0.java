@@ -9,7 +9,7 @@ public class MainAdressBook1_0 {
 
     public static void main(String[] args) throws IOException {
         LoggerClass.setupLogging();
-        AddressBook addressBook = new AddressBook("register.data");
+        AddressBookApp addressBook = new AddressBookApp("register.data");
         addressBook.start();
     }
 

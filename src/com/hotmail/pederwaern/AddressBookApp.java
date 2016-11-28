@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
+
 /**
  * Programmet AddressBook hanterar personer i en adressbok. Attributen förnamn, efternamn och emailadress ska läggas
  * till av användaren. Varje kontakt får dessutom ett unikt ID. Användaren har möjlighet att lägga till, lista och söka i
@@ -14,26 +16,26 @@ import java.util.logging.Logger;
  * @author Peder Waern
  *
  */
-public class AddressBook {
+public class AddressBookApp {
 
+    public RegisterHandler regHandler;
     private Register register;
-    private static final Logger logger = Logger.getLogger(AddressBook.class.getName());
+    private static final Logger logger = Logger.getLogger(AddressBookApp.class.getName());
 
     private String fileName;
 
-    public AddressBook(String fileName) throws IOException  {
+    public AddressBookApp(String fileName) throws IOException  {
         this.fileName = fileName;
         this.register = loadFromFile(fileName);
 
     }
 
     public void start() throws IOException {
+        regHandler = new RegisterHandler(register.getRegister());
         displayWelcome();
-
         Autosaver autosaver = new Autosaver();
         Thread autosaveThread = new Thread(autosaver);
         autosaveThread.start();
-
         takeInput();
         autosaver.stop();
         saveToFile(fileName);
@@ -54,7 +56,6 @@ public class AddressBook {
             return register;
         } catch (FileNotFoundException e) {
             logger.log(Level.SEVERE, "No binary file found to loud, creating new empty register", e);
-            // TODO skapa metod för raden nedan.
             return new Register(new ArrayList<>());
         } catch (ClassNotFoundException | IOException e) {
             logger.log(Level.SEVERE, "Class not found or IO exception", e);
@@ -91,17 +92,6 @@ public class AddressBook {
         System.out.println("Welcome!\nOptions: add\tlist\tsearch\thelp\tdelete\tquit");
     }
 
-    private void stopAutoSaver(Autosaver a) {
-
-    }
-
-    /*private void runAutosaver() {
-        Autosaver autosaver = new Autosaver();
-        Thread autosaverThread = new Thread(autosaver);
-        autosaverThread.start();
-
-
-    }*/
     /**
      * Denna metod hanterar användarens input. Kommandon ska skrivas med små bokstäver och är case-sensitive.
      * @throws IOException
@@ -113,25 +103,25 @@ public class AddressBook {
             String input = bufferedR.readLine().trim();
 
             if (isAdd(input)) {
-                register.add(input);
+                regHandler.add(input);
                 logger.fine("add typed");
             } else if (isList(input)) {
-                register.list();
+                regHandler.list();
                 logger.fine("log typed");
             } else if (isSearch(input)){
-                register.search(input);
+                regHandler.search(input);
                 logger.fine("search typed");
 //            } else if (isClear(input)) {
 //                register.clear();
             } else if (isHelp(input)){
                 logger.fine("help typed");
-                register.help();
+                regHandler.help();
             } else if (isQuit(input)){
                 logger.fine("quit typed");
                 break;
             } else if (isDelete(input)) {
                 logger.fine("delete typed");
-                register.delete(input);
+                regHandler.delete(input);
             } else {
                 logger.fine("used typed invalid command");
                 System.out.println("Invalid command");

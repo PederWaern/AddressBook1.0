@@ -1,14 +1,6 @@
-2016-11-28 14:11:57 INFO   com.hotmail.pederwaern.AddressBook displayWelcome - Program started by user
-2016-11-28 14:11:57 INFO   com.hotmail.pederwaern.AddressBook$Autosaver run - Autosaving
-2016-11-28 14:11:57 INFO   com.hotmail.pederwaern.AddressBook saveToFile - File saved
-2016-11-28 14:11:59 FIN    com.hotmail.pederwaern.AddressBook takeInput - help typed
-2016-11-28 14:11:59 INFO   com.hotmail.pederwaern.Register help - User displayed help menu
-2016-11-28 14:12:01 INFO   com.hotmail.pederwaern.Register list - User lists contacts in Adressbook
-2016-11-28 14:12:01 FIN    com.hotmail.pederwaern.AddressBook takeInput - log typed
-2016-11-28 14:12:02 INFO   com.hotmail.pederwaern.AddressBook$Autosaver run - Autosaving
-2016-11-28 14:12:02 INFO   com.hotmail.pederwaern.AddressBook saveToFile - File saved
-2016-11-28 14:12:03 INFO   com.hotmail.pederwaern.Register search - User searched the register
-2016-11-28 14:12:03 FIN    com.hotmail.pederwaern.AddressBook takeInput - search typed
-2016-11-28 14:12:05 FIN    com.hotmail.pederwaern.AddressBook takeInput - quit typed
-2016-11-28 14:12:05 INFO   com.hotmail.pederwaern.AddressBook saveToFile - File saved
-2016-11-28 14:12:05 INFO   com.hotmail.pederwaern.AddressBook displayGoodbye - Program exited by user
+2016-11-28 15:40:33 INFO   com.hotmail.pederwaern.AddressBookApp displayWelcome - Program started by user
+2016-11-28 15:40:33 INFO   com.hotmail.pederwaern.AddressBookApp$Autosaver run - Autosaving
+2016-11-28 15:40:33 INFO   com.hotmail.pederwaern.AddressBookApp saveToFile - File saved
+2016-11-28 15:40:37 FIN    com.hotmail.pederwaern.AddressBookApp takeInput - quit typed
+2016-11-28 15:40:37 INFO   com.hotmail.pederwaern.AddressBookApp saveToFile - File saved
+2016-11-28 15:40:37 INFO   com.hotmail.pederwaern.AddressBookApp displayGoodbye - Program exited by user
