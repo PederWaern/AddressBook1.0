@@ -1,4 +1,4 @@
-package com.hotmail.pederwaern;
+package com.hotmail.pederwaern.AddressBookApp;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -112,11 +112,6 @@ public class RegisterHandler {
 
     }
 
-    //OBS! Ej officielt implementerad i UI ännu.
-
-    /*public void clear () {
-        register.clear();
-    }*/
 
     public void help() {
         System.out.println("add\t\t-- Adds a new contact");

@@ -1,4 +1,4 @@
-package com.hotmail.pederwaern;
+package com.hotmail.pederwaern.AddressBookApp;
 
 import java.io.Serializable;
 import java.util.List;

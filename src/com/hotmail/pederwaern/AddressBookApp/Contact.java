@@ -1,4 +1,4 @@
-package com.hotmail.pederwaern;
+package com.hotmail.pederwaern.AddressBookApp;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -14,6 +14,7 @@ public class Contact implements Serializable{
     private String firstName;
     private String lastName;
     private String email;
+
 
     public Contact(String firstName, String lastName, String email) {
 
@@ -52,7 +53,7 @@ public class Contact implements Serializable{
 
     @Override
     public String toString() {
-        return "Contact{" +
+        return "" +
                 "id='" + id + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
@@ -60,7 +61,7 @@ public class Contact implements Serializable{
                 '}';
     }
 
-    public void setId(String id) {
+    private void setId(String id) {
         this.id = id;
     }
 

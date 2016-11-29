@@ -1,7 +1,4 @@
-package com.hotmail.pederwaern;
-
-import java.io.IOException;
-
+package com.hotmail.pederwaern.AddressBookApp;
 
 /**
  * Programmet AddressBook hanterar personer i en adressbok. Attributen förnamn, efternamn och emailadress ska läggas
@@ -14,6 +11,7 @@ import java.io.IOException;
  */
 public class AddressBookApp {
 
+
     private FileManager fileManager;
     private CommandHandler commandHandler;
     private RegisterHandler regHandler;
@@ -21,7 +19,7 @@ public class AddressBookApp {
     private Thread autosaveThread;
     private AutoSaver autosaver;
 
-    public AddressBookApp(String fileName) throws IOException  {
+    public AddressBookApp(String fileName)  {
 
         fileManager = new FileManager(fileName);
         Register register = fileManager.loadFromFile();
@@ -33,7 +31,7 @@ public class AddressBookApp {
 
     }
 
-    public void start() throws IOException {
+    public void start(){
         messageDisplayer.displayWelcome();
         autosaveThread.start();
         commandHandler.takeInput();

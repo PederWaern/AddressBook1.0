@@ -1,4 +1,4 @@
-package com.hotmail.pederwaern;
+package com.hotmail.pederwaern.AddressBookApp;
 
 /**
  * Created by pederwaern on 2016-11-18.
