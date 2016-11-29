@@ -1,7 +1,6 @@
 package com.hotmail.pederwaern;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 
 
 /**
@@ -15,20 +14,17 @@ import java.util.logging.Logger;
  */
 public class AddressBookApp {
 
-    private RegisterHandler regHandler;
-    private CommandHandler commandHandler;
-    private MessageDisplayer messageDisplayer;
-    private AutoSaver autosaver;
-    private Thread autosaveThread;
     private FileManager fileManager;
-    private Register register;
-
-    private static final Logger logger = Logger.getLogger(AddressBookApp.class.getName());
+    private CommandHandler commandHandler;
+    private RegisterHandler regHandler;
+    private MessageDisplayer messageDisplayer;
+    private Thread autosaveThread;
+    private AutoSaver autosaver;
 
     public AddressBookApp(String fileName) throws IOException  {
 
         fileManager = new FileManager(fileName);
-        register = fileManager.loadFromFile();
+        Register register = fileManager.loadFromFile();
         regHandler = new RegisterHandler(register);
         commandHandler = new CommandHandler(regHandler);
         autosaver = new AutoSaver(regHandler.getRegister(), fileManager);

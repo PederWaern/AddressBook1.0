@@ -1,7 +1,6 @@
 package com.hotmail.pederwaern;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,18 +15,18 @@ public class FileManager {
         this.fileName = fileName;
     }
 
-    private static final Logger logger = Logger.getLogger(Register.class.getName());
+    private static final Logger logger = Logger.getLogger(FileManager.class.getName());
 
     public Register loadFromFile() {
 
-        try {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName));
+        //try with resources
+        try(ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName))) {
             Register reg = (Register) in.readObject();
             in.close();
             return reg;
         } catch (FileNotFoundException e) {
-            logger.log(Level.SEVERE, "No binary file found to loud, creating new empty register", e);
-            return new Register(new ArrayList<>());
+            logger.log(Level.SEVERE, "No binary file found to loud", e);
+            return null;
         } catch (ClassNotFoundException | IOException e) {
             logger.log(Level.SEVERE, "Class not found or IO exception", e);
             throw new RuntimeException(e);

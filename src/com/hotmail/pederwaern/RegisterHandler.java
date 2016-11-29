@@ -10,11 +10,18 @@ import java.util.logging.Logger;
  */
 public class RegisterHandler {
 
-    private static final Logger logger = Logger.getLogger(Register.class.getName());
+    private static final Logger logger = Logger.getLogger(RegisterHandler.class.getName());
     private Register register;
 
      public RegisterHandler(Register register) {
-        this.register = register;
+
+         if (register == null) {
+             this.register = new Register(new ArrayList<>());
+             logger.info("Register is null, new register created");
+         }
+         else {
+             this.register = register;
+         }
     }
 
     public Register getRegister() {
