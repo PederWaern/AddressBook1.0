@@ -11,21 +11,35 @@ import java.util.logging.Logger;
 public class RegisterHandler {
 
     private static final Logger logger = Logger.getLogger(RegisterHandler.class.getName());
-    private Register register;
+    private Register localRegister;
+    private Register remoteRegister;
+    private ArrayList<Contact> localAndRemoteRegs;
 
-     public RegisterHandler(Register register) {
+     public RegisterHandler(Register locRegister, Register remoteRegister) {
 
-         if (register == null) {
-             this.register = new Register(new ArrayList<>());
-             logger.info("Register is null, new register created");
+
+         if (locRegister != null) {
+             this.localRegister = locRegister;
          }
          else {
-             this.register = register;
+             this.localRegister = new Register(new ArrayList<>());
          }
+
+         if (remoteRegister!= null) {
+             this.remoteRegister = remoteRegister;
+         }
+         else {
+             this.remoteRegister = new Register(new ArrayList<>());
+         }
+
+         localAndRemoteRegs = new ArrayList<>();
+         localAndRemoteRegs.addAll(this.localRegister.getRegister());
+         localAndRemoteRegs.addAll(this.remoteRegister.getRegister());
+
     }
 
     public Register getRegister() {
-        return register;
+        return localRegister;
     }
 
     public void add(String inputString) {
@@ -40,7 +54,11 @@ public class RegisterHandler {
         String lastName = words[2];
         String email = words[3];
 
-        register.getRegister().add(new Contact(firstName, lastName, email));
+        Contact contact = new Contact(firstName, lastName, email, true);
+
+        localRegister.getRegister().add(contact);
+        localAndRemoteRegs.add(contact);
+
         System.out.println("Contact has been added");
         logger.info("Contact added to Adressbook by user");
     }
@@ -50,17 +68,17 @@ public class RegisterHandler {
      * Listar alla kontakter i adressboken.
      */
     public void list() {
-        if (register.getRegister().size()==0){
+        if (localAndRemoteRegs.size()==0){
             System.out.println("Adressbook is empty.");
             return;
         }
 
         //skapar en kopia av registret och sorterar kontakterna på förnamn.
         List<Contact> sortedList = new ArrayList<>();
-        sortedList.addAll(register.getRegister());
-        Collections.sort(sortedList, new FirstNameComparator());
+        sortedList.addAll(localAndRemoteRegs);
+        Collections.sort(localAndRemoteRegs, new FirstNameComparator());
 
-        for (Contact contact: sortedList
+        for (Contact contact: localAndRemoteRegs
                 ) {
             System.out.println(listResultFormat(contact));
 
@@ -89,7 +107,7 @@ public class RegisterHandler {
         List<Contact> listOfFoundEntries = new ArrayList<>();
         logger.info("User searched the register");
 
-        for (Contact contact: register.getRegister()) {
+        for (Contact contact: localAndRemoteRegs) {
             if        (contact.getFirstName().toLowerCase().startsWith(searchString)
                     || contact.getLastName().toLowerCase().startsWith(searchString)
                     || contact.getEmail().toLowerCase().startsWith(searchString) ) {
@@ -135,12 +153,12 @@ public class RegisterHandler {
         boolean contactFound = false;
 
         // söker efter strängen i registret och avbryter loopen om id har hittats.
-        for (int i = 0; i < register.getRegister().size(); i++) {
-            if (register.getRegister().get(i).getId().equals(arguments[1])) {
-                register.getRegister().remove(i);
+        for (int i = 0; i < localRegister.getRegister().size(); i++) {
+            if (localRegister.getRegister().get(i).getId().equals(arguments[1])) {
+                localRegister.getRegister().remove(i);
                 contactFound = true;
                 //bryt loop
-                i = register.getRegister().size();
+                i = localRegister.getRegister().size();
             }
 
         }

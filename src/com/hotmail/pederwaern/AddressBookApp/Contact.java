@@ -15,13 +15,30 @@ public class Contact implements Serializable{
     private String lastName;
     private String email;
 
+    public boolean isLocal() {
+        return isLocal;
+    }
 
-    public Contact(String firstName, String lastName, String email) {
+    private boolean isLocal;
+
+
+    public Contact(String firstName, String lastName, String email, boolean isLocal) {
 
         createId();
         setFirstName(firstName);
         setLastName(lastName);
         setEmail(email);
+        this.isLocal = isLocal;
+
+
+    }
+
+    public Contact(String UUID, String firstName, String lastName, String email, boolean isLocal) {
+        setFirstName(firstName);
+        setLastName(lastName);
+        setEmail(email);
+        this.id = UUID;
+        this.isLocal = isLocal;
 
     }
 
