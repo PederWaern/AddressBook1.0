@@ -38,18 +38,21 @@ public class ABServer {
                 switch (clientInput) {
                     case "getall":
                         printStream.println(parseCSVfile());
-                        printStream.flush();
+                      //  System.out.println("getall from client");
                         break;
                     case "exit":
+                       // System.out.println("exit from client");
                         keepLooping = false;
                         break;
                     default:
                         break;
                 }
             }
+            bufferedReaderStream.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     private String parseCSVfile() {
@@ -57,11 +60,10 @@ public class ABServer {
         String appendedLines = "";
         try (Scanner scanner = new Scanner(new FileReader("database.csv"))) {
             while (scanner.hasNextLine()) {
-                line = scanner.nextLine()
-                        .concat("\n");
+                line = scanner.nextLine() + "\n";
                 appendedLines += line;
             }
-            return appendedLines;
+            return appendedLines.trim();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

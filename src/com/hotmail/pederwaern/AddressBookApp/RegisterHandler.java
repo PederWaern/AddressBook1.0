@@ -23,12 +23,12 @@ public class RegisterHandler {
     public RegisterHandler(Register locRegister) {
 
 
-         if (locRegister != null) {
-             this.localRegister = locRegister;
-         }
-         else {
-             this.localRegister = new Register(new ArrayList<>());
-         }
+        if (locRegister != null) {
+            this.localRegister = locRegister;
+        }
+        else {
+            this.localRegister = new Register(new ArrayList<>());
+        }
         remoteRegister = new ArrayList<>();
     }
 
@@ -38,8 +38,8 @@ public class RegisterHandler {
 
 
     public void loadRemoteRegister(String serverName, int port) {
-         Thread remote = new Thread(new RemoteHandler(serverName, port));
-         remote.start();
+        Thread remote = new Thread(new RemoteHandler(serverName, port));
+        remote.start();
 
 
     }
@@ -284,15 +284,13 @@ public class RegisterHandler {
             ) {
                 String total = "";
 
-                printStream.println("getall");
-
+                printStream.println("getall\nexit");
+                printStream.flush();
                 while (inputScanner.hasNextLine()){
                     String line = inputScanner.nextLine();
                     total = total + line + "\n";
                 }
-                printStream.flush();
-                printStream.println("exit");
-                printStream.flush();
+
                 contactLine = total;
 
             } catch (IOException e) {
