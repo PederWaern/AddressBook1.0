@@ -39,7 +39,6 @@ public class ABServer {
                     case "getall":
                         printStream.println(parseCSVfile());
                         printStream.flush();
-                        keepLooping = false;
                         break;
                     case "exit":
                         keepLooping = false;
