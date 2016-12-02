@@ -20,8 +20,12 @@ public class CommandHandler {
     public void takeInput() {
         try (BufferedReader bufferedR = new BufferedReader(new InputStreamReader(System.in))) {
             while (true) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 String input = bufferedR.readLine().trim();
-
                 if (isAdd(input)) {
                     regHandler.add(input);
                     logger.fine("add typed");

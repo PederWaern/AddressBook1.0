@@ -46,15 +46,12 @@ public class ABServer {
                }
             }
 
-
         } catch (Exception e) {
             e.printStackTrace();
         }
 
 
     }
-
-
 
     private String parseCSVfile() {
         String line;

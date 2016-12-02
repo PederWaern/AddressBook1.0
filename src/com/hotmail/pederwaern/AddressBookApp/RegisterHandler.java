@@ -11,11 +11,16 @@ import java.util.logging.Logger;
 public class RegisterHandler {
 
     private static final Logger logger = Logger.getLogger(RegisterHandler.class.getName());
-    private Register localRegister;
-    private Register remoteRegister;
-    private ArrayList<Contact> localAndRemoteRegs;
 
-     public RegisterHandler(Register locRegister, Register remoteRegister) {
+    private static ArrayList<Contact> REMOTE_REGISTER;
+
+    private Register localRegister;
+
+    public RegisterHandler(){
+        REMOTE_REGISTER = new ArrayList<>();
+    }
+
+    public RegisterHandler(Register locRegister) {
 
 
          if (locRegister != null) {
@@ -24,22 +29,17 @@ public class RegisterHandler {
          else {
              this.localRegister = new Register(new ArrayList<>());
          }
-
-         if (remoteRegister!= null) {
-             this.remoteRegister = remoteRegister;
-         }
-         else {
-             this.remoteRegister = new Register(new ArrayList<>());
-         }
-
-         localAndRemoteRegs = new ArrayList<>();
-         localAndRemoteRegs.addAll(this.localRegister.getRegister());
-         localAndRemoteRegs.addAll(this.remoteRegister.getRegister());
+         REMOTE_REGISTER = new ArrayList<>();
 
     }
 
-    public Register getRegister() {
+    public Register getLocalRegister() {
         return localRegister;
+    }
+
+    public void setRemoteRegister(ArrayList<Contact> remoteReg) {
+        if(remoteReg != null)
+        REMOTE_REGISTER = remoteReg;
     }
 
     public void add(String inputString) {
@@ -57,7 +57,6 @@ public class RegisterHandler {
         Contact contact = new Contact(firstName, lastName, email, true);
 
         localRegister.getRegister().add(contact);
-        localAndRemoteRegs.add(contact);
 
         System.out.println("Contact has been added");
         logger.info("Contact added to Adressbook by user");
@@ -68,17 +67,20 @@ public class RegisterHandler {
      * Listar alla kontakter i adressboken.
      */
     public void list() {
-        if (localAndRemoteRegs.size()==0){
+        if (localRegister.getRegister().size()== 0
+                && REMOTE_REGISTER.size()== 0){
             System.out.println("Adressbook is empty.");
             return;
         }
 
         //skapar en kopia av registret och sorterar kontakterna på förnamn.
         List<Contact> sortedList = new ArrayList<>();
-        sortedList.addAll(localAndRemoteRegs);
-        Collections.sort(localAndRemoteRegs, new FirstNameComparator());
+        sortedList.addAll(localRegister.getRegister());
+        sortedList.addAll(REMOTE_REGISTER);
 
-        for (Contact contact: localAndRemoteRegs
+        Collections.sort(sortedList, new FirstNameComparator());
+
+        for (Contact contact: sortedList
                 ) {
             System.out.println(listResultFormat(contact));
 
@@ -91,7 +93,7 @@ public class RegisterHandler {
      * @param searchString
      */
     public void search (String searchString){
-
+//Todo fixa search med bägge register
         String[] arguments = searchString.split(" ");
 
         //kollar att antalet ord är rätt
@@ -106,6 +108,12 @@ public class RegisterHandler {
         boolean stringFound = false;
         List<Contact> listOfFoundEntries = new ArrayList<>();
         logger.info("User searched the register");
+
+
+        ArrayList<Contact> localAndRemoteRegs = new ArrayList<>();
+        localAndRemoteRegs.addAll(localRegister.getRegister());
+        localAndRemoteRegs.addAll(REMOTE_REGISTER);
+
 
         for (Contact contact: localAndRemoteRegs) {
             if        (contact.getFirstName().toLowerCase().startsWith(searchString)
@@ -151,6 +159,15 @@ public class RegisterHandler {
         String idToDelete = arguments[1];
 
         boolean contactFound = false;
+
+        for (Contact remoteContact : REMOTE_REGISTER) {
+            if (remoteContact.getId().equals(idToDelete)) {
+                System.out.println("Cannot delete remote contact");
+                return;
+            }
+        }
+
+
 
         // söker efter strängen i registret och avbryter loopen om id har hittats.
         for (int i = 0; i < localRegister.getRegister().size(); i++) {

@@ -5,33 +5,50 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class RemoteContactHandler implements Runnable {
 
+    private RegisterHandler registerHandler;
+    private boolean keepLooping;
+
     public RemoteContactHandler() {
+
+
+        registerHandler = new RegisterHandler();
+        keepLooping = true;
         remoteC = new ArrayList<>();
         run();
     }
 
-    public ArrayList<Contact> getRemoteContacts() {
-        return remoteC;
-    }
 
     private ArrayList<Contact> remoteC;
     private String contactLine;
 
-
-
-
+    @Override
     public void run() {
 
-        getContacts();
-        parseContacts();
+        while (keepLooping) {
+            getContacts();
+            parseContacts();
+            copyContactsToRegisterHandler();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            stop();
+
+        }
     }
 
+    public void stop() {
+        keepLooping = false;
+    }
+    private void copyContactsToRegisterHandler() {
+        registerHandler.setRemoteRegister(remoteC);
+    }
     private void parseContacts() {
 
         String ID;
@@ -51,11 +68,10 @@ public class RemoteContactHandler implements Runnable {
                 email = arguments[3];
 
                 remoteC.add((new Contact(ID, firstName, lastName, email, false)));
-                Thread.sleep(50);
             }
 
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        } catch (NullPointerException e) {
+            //TODO logga felet
         }
 
     }
@@ -63,7 +79,7 @@ public class RemoteContactHandler implements Runnable {
     private void getContacts() {
 
         try {
-            Socket socket = new Socket("localhost", 61616);
+            Socket socket = new Socket(Connection.HOST, Connection.PORT);
             InputStreamReader inputStream = new InputStreamReader(socket.getInputStream());
 
 
@@ -79,7 +95,6 @@ public class RemoteContactHandler implements Runnable {
                 total = total + line + "\n";
             }
             printStream.flush();
-
             printStream.println("exit");
             printStream.flush();
             printStream.close();
@@ -87,13 +102,13 @@ public class RemoteContactHandler implements Runnable {
 
             contactLine = total;
 
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("WARNING: Could not load remote register correctly\n");
+          //  e.printStackTrace();
         }
     }
 
 
 
 }
+

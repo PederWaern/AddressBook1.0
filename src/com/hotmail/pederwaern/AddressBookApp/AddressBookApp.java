@@ -29,16 +29,13 @@ public class AddressBookApp {
 
         fileManager = new FileManager(fileName);
         Register localRegister = fileManager.loadFromFile();
+        regHandler = new RegisterHandler(localRegister);
+        commandHandler = new CommandHandler(regHandler);
 
         remoteContactHandler = new RemoteContactHandler();
         remoteThread = new Thread(remoteContactHandler);
-        remoteThread.start();
-        Register remoteRegister = new Register(remoteContactHandler.getRemoteContacts());
-        remoteThread.stop();
-        regHandler = new RegisterHandler(localRegister, remoteRegister);
 
-        commandHandler = new CommandHandler(regHandler);
-        autosaver = new AutoSaver(regHandler.getRegister(), fileManager);
+        autosaver = new AutoSaver(regHandler.getLocalRegister(), fileManager);
         autosaveThread = new Thread(autosaver);
         messageDisplayer = new MessageDisplayer();
 
@@ -49,14 +46,12 @@ public class AddressBookApp {
 
     public void start(){
 
-        //remotecontacs added
-
-
-        messageDisplayer.displayWelcome();
         autosaveThread.start();
+        messageDisplayer.displayWelcome();
         commandHandler.takeInput();
+        remoteThread.start();
         autosaver.stop();
-        fileManager.saveToFile(regHandler.getRegister());
+        fileManager.saveToFile(regHandler.getLocalRegister());
         messageDisplayer.displayGoodbye();
         System.exit(0);
     }
