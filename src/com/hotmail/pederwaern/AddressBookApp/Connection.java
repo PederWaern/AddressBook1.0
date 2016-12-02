@@ -5,5 +5,6 @@ package com.hotmail.pederwaern.AddressBookApp;
  */
 public class Connection {
     public static final String HOST = "localhost";
-    public static final int PORT = 61616;
+    public static final int SERVER_ONE_PORT = 61616;
+    public static final int SERVER_TWO_PORT = 61617;
 }

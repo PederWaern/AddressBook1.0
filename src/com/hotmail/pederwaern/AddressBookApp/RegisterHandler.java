@@ -1,24 +1,24 @@
 package com.hotmail.pederwaern.AddressBookApp;
 
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * Created by pederwaern on 2016-11-28.
- */
+
 public class RegisterHandler {
 
     private static final Logger logger = Logger.getLogger(RegisterHandler.class.getName());
 
-    private static ArrayList<Contact> REMOTE_REGISTER;
 
+    private ArrayList<Contact> remoteRegister;
     private Register localRegister;
-
-    public RegisterHandler(){
-        REMOTE_REGISTER = new ArrayList<>();
-    }
 
     public RegisterHandler(Register locRegister) {
 
@@ -29,17 +29,19 @@ public class RegisterHandler {
          else {
              this.localRegister = new Register(new ArrayList<>());
          }
-         REMOTE_REGISTER = new ArrayList<>();
-
+        remoteRegister = new ArrayList<>();
     }
 
     public Register getLocalRegister() {
         return localRegister;
     }
 
-    public void setRemoteRegister(ArrayList<Contact> remoteReg) {
-        if(remoteReg != null)
-        REMOTE_REGISTER = remoteReg;
+
+    public void loadRemoteRegister(String serverName, int port) {
+         Thread remote = new Thread(new RemoteHandler(serverName, port));
+         remote.start();
+
+
     }
 
     public void add(String inputString) {
@@ -68,7 +70,7 @@ public class RegisterHandler {
      */
     public void list() {
         if (localRegister.getRegister().size()== 0
-                && REMOTE_REGISTER.size()== 0){
+                && remoteRegister.size()== 0){
             System.out.println("Adressbook is empty.");
             return;
         }
@@ -76,7 +78,7 @@ public class RegisterHandler {
         //skapar en kopia av registret och sorterar kontakterna på förnamn.
         List<Contact> sortedList = new ArrayList<>();
         sortedList.addAll(localRegister.getRegister());
-        sortedList.addAll(REMOTE_REGISTER);
+        sortedList.addAll(remoteRegister);
 
         Collections.sort(sortedList, new FirstNameComparator());
 
@@ -112,7 +114,7 @@ public class RegisterHandler {
 
         ArrayList<Contact> localAndRemoteRegs = new ArrayList<>();
         localAndRemoteRegs.addAll(localRegister.getRegister());
-        localAndRemoteRegs.addAll(REMOTE_REGISTER);
+        localAndRemoteRegs.addAll(remoteRegister);
 
 
         for (Contact contact: localAndRemoteRegs) {
@@ -160,7 +162,7 @@ public class RegisterHandler {
 
         boolean contactFound = false;
 
-        for (Contact remoteContact : REMOTE_REGISTER) {
+        for (Contact remoteContact : remoteRegister) {
             if (remoteContact.getId().equals(idToDelete)) {
                 System.out.println("Cannot delete remote contact");
                 return;
@@ -197,6 +199,108 @@ public class RegisterHandler {
                 "Firstname: " + contact.getFirstName() + "\n" +
                 "Lastname: " + contact.getLastName() + "\n" +
                 "Mailadress:" + contact.getEmail() + "\n";
+    }
+
+
+
+    private class RemoteHandler implements Runnable {
+
+
+        private boolean keepLooping;
+        boolean isSuccessfullLoad;
+        final int port;
+        String serverName;
+        private ArrayList<Contact> remoteContacts;
+        private String contactLine;
+
+        public RemoteHandler(String serverName, int port) {
+            this.port = port;
+            this.serverName = serverName;
+            keepLooping = true;
+            remoteContacts = new ArrayList<>();
+            run();
+        }
+
+        @Override
+        public synchronized void run() {
+
+            while (keepLooping) {
+                getContacts();
+                parseContacts();
+                copyContactsToRegisterHandler();
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    logger.log(Level.SEVERE, "Thread exception",e);
+                }
+                stop();
+
+            }
+        }
+
+        public void stop() {
+            keepLooping = false;
+        }
+        private void copyContactsToRegisterHandler() {
+            remoteRegister.addAll(remoteContacts);
+        }
+        private void parseContacts() {
+
+            String ID;
+            String firstName;
+            String lastName;
+            String email;
+            String line="";
+            String[] arguments;
+
+            try (Scanner scanner = new Scanner(contactLine)) {
+                while (scanner.hasNext()) {
+                    line = scanner.nextLine();
+                    arguments = line.split(",");
+                    ID = arguments[0];
+                    firstName = arguments[1];
+                    lastName = arguments[2];
+                    email = arguments[3];
+
+                    remoteContacts.add((new Contact(ID, firstName, lastName, email, false)));
+                    logger.info("Contact ID " + ID + " from " + serverName + " on port " + port + " was imported successfully");
+
+                }
+
+            } catch (NullPointerException e) {
+                logger.log(Level.SEVERE, "Nullpointer exception",e);
+            }
+
+        }
+
+        private void getContacts() {
+
+            try(
+                    Socket socket = new Socket(Connection.HOST, port);
+                    InputStreamReader inputStream = new InputStreamReader(socket.getInputStream());
+                    PrintStream printStream = new PrintStream(socket.getOutputStream());
+                    Scanner inputScanner = new Scanner(inputStream)
+            ) {
+                String total = "";
+
+                printStream.println("getall");
+
+                while (inputScanner.hasNextLine()){
+                    String line = inputScanner.nextLine();
+                    total = total + line + "\n";
+                }
+                printStream.flush();
+                printStream.println("exit");
+                printStream.flush();
+                contactLine = total;
+
+            } catch (IOException e) {
+                System.out.println("WARNING: Remote contacts from " + serverName + " may not have been downloaded correctly\n" );
+                logger.log(Level.SEVERE, "Exception in getting remote register", e);
+            }
+
+        }
     }
 
 }

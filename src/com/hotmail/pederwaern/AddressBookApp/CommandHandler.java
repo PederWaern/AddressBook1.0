@@ -31,7 +31,7 @@ public class CommandHandler {
                     logger.fine("add typed");
                 } else if (isList(input)) {
                     regHandler.list();
-                    logger.fine("log typed");
+                    logger.fine("list typed");
                 } else if (isSearch(input)){
                     regHandler.search(input);
                     logger.fine("search typed");
