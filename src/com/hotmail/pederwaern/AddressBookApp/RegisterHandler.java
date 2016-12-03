@@ -257,7 +257,7 @@ public class RegisterHandler {
             try (Scanner scanner = new Scanner(contactLine)) {
                 while (scanner.hasNext()) {
                     line = scanner.nextLine();
-                    arguments = line.split(",");
+                    arguments = line.split(" ");
                     ID = arguments[0];
                     firstName = arguments[1];
                     lastName = arguments[2];

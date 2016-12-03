@@ -63,7 +63,8 @@ public class ABServer2 {
                 line = scanner.nextLine() + "\n";
                 appendedLines += line;
             }
-            return appendedLines.trim();
+            return appendedLines.trim()
+                    .replace(",", " ");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
