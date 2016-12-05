@@ -1,5 +1,6 @@
 package com.hotmail.pederwaern.AddressBookApp;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -21,13 +22,14 @@ public class AutoSaver implements Runnable{
     @Override
     public void run() {
         while(keepLooping) {
-            logger.info("Autosaving");
-            fileManager.saveToFile(register);
             try {
                 Thread.sleep(5 * 1000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                logger.log(Level.SEVERE, "Thread interrupted exception", e);
             }
+            logger.info("Autosaving");
+            fileManager.saveToFile(register);
+
         }
     }
 

@@ -21,8 +21,6 @@ public class RegisterHandler {
     private Register localRegister;
 
     public RegisterHandler(Register locRegister) {
-
-
         if (locRegister != null) {
             this.localRegister = locRegister;
         }
@@ -58,7 +56,7 @@ public class RegisterHandler {
 
         Contact contact = new Contact(firstName, lastName, email, true);
 
-        localRegister.getRegister().add(contact);
+        localRegister.getContactList().add(contact);
 
         System.out.println("Contact has been added");
         logger.info("Contact added to Adressbook by user");
@@ -69,7 +67,7 @@ public class RegisterHandler {
      * Listar alla kontakter i adressboken.
      */
     public void list() {
-        if (localRegister.getRegister().size()== 0
+        if (localRegister.getContactList().size()== 0
                 && remoteRegister.size()== 0){
             System.out.println("Adressbook is empty.");
             return;
@@ -77,7 +75,7 @@ public class RegisterHandler {
 
         //skapar en kopia av registret och sorterar kontakterna på förnamn.
         List<Contact> sortedList = new ArrayList<>();
-        sortedList.addAll(localRegister.getRegister());
+        sortedList.addAll(localRegister.getContactList());
         sortedList.addAll(remoteRegister);
 
         Collections.sort(sortedList, new FirstNameComparator());
@@ -90,12 +88,9 @@ public class RegisterHandler {
         logger.info("User lists contacts in Adressbook");
     }
 
-    /**
-     * Sökfunktionen tillämpar "Starts with".
-     * @param searchString
-     */
+
     public void search (String searchString){
-//Todo fixa search med bägge register
+
         String[] arguments = searchString.split(" ");
 
         //kollar att antalet ord är rätt
@@ -111,11 +106,9 @@ public class RegisterHandler {
         List<Contact> listOfFoundEntries = new ArrayList<>();
         logger.info("User searched the register");
 
-
         ArrayList<Contact> localAndRemoteRegs = new ArrayList<>();
-        localAndRemoteRegs.addAll(localRegister.getRegister());
+        localAndRemoteRegs.addAll(localRegister.getContactList());
         localAndRemoteRegs.addAll(remoteRegister);
-
 
         for (Contact contact: localAndRemoteRegs) {
             if        (contact.getFirstName().toLowerCase().startsWith(searchString)
@@ -140,7 +133,6 @@ public class RegisterHandler {
 
     }
 
-
     public void help() {
         System.out.println("add\t\t-- Adds a new contact");
         System.out.println("delete\t-- Deletes a contact");
@@ -159,9 +151,9 @@ public class RegisterHandler {
             return;
         }
         String idToDelete = arguments[1];
-
         boolean contactFound = false;
 
+        //kollar om kontakten är del av det remota registret, isåfall returnerar metoden med ett msg till användaren.
         for (Contact remoteContact : remoteRegister) {
             if (remoteContact.getId().equals(idToDelete)) {
                 System.out.println("Cannot delete remote contact");
@@ -169,15 +161,13 @@ public class RegisterHandler {
             }
         }
 
-
-
         // söker efter strängen i registret och avbryter loopen om id har hittats.
-        for (int i = 0; i < localRegister.getRegister().size(); i++) {
-            if (localRegister.getRegister().get(i).getId().equals(arguments[1])) {
-                localRegister.getRegister().remove(i);
+        for (int i = 0; i < localRegister.getContactList().size(); i++) {
+            if (localRegister.getContactList().get(i).getId().equals(idToDelete)) {
+                localRegister.getContactList().remove(i);
                 contactFound = true;
                 //bryt loop
-                i = localRegister.getRegister().size();
+                i = localRegister.getContactList().size();
             }
 
         }
@@ -201,15 +191,15 @@ public class RegisterHandler {
                 "Mailadress:" + contact.getEmail() + "\n";
     }
 
+    //-------privat klass----
 
 
     private class RemoteHandler implements Runnable {
 
 
         private boolean keepLooping;
-        boolean isSuccessfullLoad;
         final int port;
-        String serverName;
+        final String serverName;
         private ArrayList<Contact> remoteContacts;
         private String contactLine;
 
@@ -232,7 +222,7 @@ public class RegisterHandler {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                    logger.log(Level.SEVERE, "Thread exception",e);
+                    logger.log(Level.SEVERE, "Thread interrupted exception",e);
                 }
                 stop();
 
@@ -251,12 +241,11 @@ public class RegisterHandler {
             String firstName;
             String lastName;
             String email;
-            String line="";
             String[] arguments;
 
             try (Scanner scanner = new Scanner(contactLine)) {
                 while (scanner.hasNext()) {
-                    line = scanner.nextLine();
+                    String line = scanner.nextLine();
                     arguments = line.split(" ");
                     ID = arguments[0];
                     firstName = arguments[1];
@@ -275,7 +264,6 @@ public class RegisterHandler {
         }
 
         private void getContacts() {
-
             try(
                     Socket socket = new Socket(Connection.HOST, port);
                     InputStreamReader inputStream = new InputStreamReader(socket.getInputStream());
@@ -291,7 +279,7 @@ public class RegisterHandler {
                     total = total + line + "\n";
                 }
 
-                contactLine = total;
+                this.contactLine = total;
 
             } catch (IOException e) {
                 System.out.println("WARNING: Remote contacts from " + serverName + " may not have been downloaded correctly\n" );

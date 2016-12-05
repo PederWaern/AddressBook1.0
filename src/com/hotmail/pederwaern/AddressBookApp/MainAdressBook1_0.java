@@ -7,9 +7,8 @@ import com.hotmail.pederwaern.AddressBookApp.logging.LoggerClass;
  */
 public class MainAdressBook1_0 {
     public static void main(String[] args) {
-        //TODO refaktorera allmänt...invänta feedback och snygga upp registerhandler klassen...ev servern..
         LoggerClass.setupLogging();
-        AddressBookApp addressBook = new AddressBookApp("register.data");
+        AddressBookApp addressBook = new AddressBookApp();
         addressBook.start();
     }
 

@@ -4,9 +4,7 @@ import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * Created by pederwaern on 2016-11-28.
- */
+
 public class FileManager {
 
     private String fileName;
@@ -37,8 +35,8 @@ public class FileManager {
 
     public synchronized void saveToFile(Register register){
 
-        try {
-            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName));
+        try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName));) {
+
             out.writeObject(register);
             out.close();
             logger.info("File saved");
@@ -47,11 +45,5 @@ public class FileManager {
             logger.log(Level.SEVERE, "IO exception", i);
         }
     }
-
-    public String getFileName() {
-        return fileName;
-    }
-
-
 
 }

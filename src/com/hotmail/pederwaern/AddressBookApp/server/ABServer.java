@@ -18,7 +18,7 @@ public class ABServer {
     }
 
     private void go() {
-        System.out.println("server running...");
+        System.out.println("server 1 running...");
         try {
             serverSocket = new ServerSocket(61616);
             socket = serverSocket.accept();
@@ -68,7 +68,8 @@ public class ABServer {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        return null;
+
+        return appendedLines;
 
     }
 

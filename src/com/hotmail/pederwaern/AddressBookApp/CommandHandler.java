@@ -3,12 +3,12 @@ package com.hotmail.pederwaern.AddressBookApp;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * Created by pederwaern on 2016-11-28.
- */
+
 public class CommandHandler {
+
 
     private static final Logger logger = Logger.getLogger(CommandHandler.class.getName());
     private RegisterHandler regHandler;
@@ -23,34 +23,34 @@ public class CommandHandler {
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    logger.log(Level.SEVERE, "Thread interrupted", e);
                 }
                 String input = bufferedR.readLine().trim();
                 if (isAdd(input)) {
                     regHandler.add(input);
-                    logger.fine("add typed");
+                    logger.fine("add typed: " + input);
                 } else if (isList(input)) {
                     regHandler.list();
-                    logger.fine("list typed");
+                    logger.fine("list typed: " +  input);
                 } else if (isSearch(input)){
                     regHandler.search(input);
-                    logger.fine("search typed");
+                    logger.fine("search typed: " + input);
                 } else if (isHelp(input)){
-                    logger.fine("help typed");
+                    logger.fine("help typed: " + input);
                     regHandler.help();
                 } else if (isQuit(input)){
-                    logger.fine("quit typed");
+                    logger.fine("quit typed: " + input);
                     break;
                 } else if (isDelete(input)) {
-                    logger.fine("delete typed");
+                    logger.fine("delete typed: " + input);
                     regHandler.delete(input);
                 } else {
                     logger.fine("used typed invalid command");
-                    System.out.println("Invalid command");
+                    System.out.println("Invalid command: " + input);
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "IO-exception", e);
         }
     }
 

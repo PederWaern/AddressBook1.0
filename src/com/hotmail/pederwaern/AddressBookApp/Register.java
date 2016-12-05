@@ -17,7 +17,7 @@ public class Register implements Serializable  {
         this.register = register;
     }
 
-    public List<Contact> getRegister() {
+    public List<Contact> getContactList() {
         return register;
     }
 

@@ -11,6 +11,7 @@ package com.hotmail.pederwaern.AddressBookApp;
  */
 public class AddressBookApp {
 
+    private final String dataFileName = "register.data";
 
     private FileManager fileManager;
     private CommandHandler commandHandler;
@@ -20,9 +21,9 @@ public class AddressBookApp {
     private AutoSaver autosaver;
     private Register localRegister;
 
-    public AddressBookApp(String fileName)  {
+    public AddressBookApp()  {
 
-        fileManager = new FileManager(fileName);
+        fileManager = new FileManager(dataFileName);
         localRegister = fileManager.loadFromFile();
         regHandler = new RegisterHandler(localRegister);
         commandHandler = new CommandHandler(regHandler);
@@ -45,5 +46,4 @@ public class AddressBookApp {
         System.exit(0);
     }
 }
-
 
