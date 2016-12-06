@@ -3,43 +3,25 @@ package com.hotmail.pederwaern.AddressBookApp;
 import java.io.Serializable;
 import java.util.UUID;
 
-/**
- * Contact är en kontakt i en adressbok som innehåller ID(UUID), förnamn, efternamn och emailadress.
- *
- */
 public class Contact implements Serializable{
-
 
     private String id;
     private String firstName;
     private String lastName;
     private String email;
 
-    public boolean isLocal() {
-        return isLocal;
-    }
-
-    private boolean isLocal;
-
-
-    public Contact(String firstName, String lastName, String email, boolean isLocal) {
-
+    public Contact(String firstName, String lastName, String email) {
         createId();
         setFirstName(firstName);
         setLastName(lastName);
         setEmail(email);
-        this.isLocal = isLocal;
-
-
     }
 
-    public Contact(String UUID, String firstName, String lastName, String email, boolean isLocal) {
+    public Contact(String UUID, String firstName, String lastName, String email) {
         setFirstName(firstName);
         setLastName(lastName);
         setEmail(email);
         this.id = UUID;
-        this.isLocal = isLocal;
-
     }
 
     public String getId() {

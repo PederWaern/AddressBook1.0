@@ -18,7 +18,6 @@ public class ABServer2 {
     }
 
     private void go() {
-        System.out.println("server 2 running...");
         try {
             serverSocket = new ServerSocket(61617);
             socket = serverSocket.accept();
@@ -38,17 +37,14 @@ public class ABServer2 {
                 switch (clientInput) {
                     case "getall":
                         printStream.println(parseCSVfile());
-                        // System.out.println("getall from client");
                         break;
                     case "exit":
-                        // System.out.println("exit from client");
                         keepLooping = false;
                         break;
                     default:
                         break;
                 }
             }
-            bufferedReaderStream.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,14 +1,5 @@
 package com.hotmail.pederwaern.AddressBookApp;
 
-/**
- * Programmet AddressBook hanterar personer i en adressbok. Attributen förnamn, efternamn och emailadress ska läggas
- * till av användaren. Varje kontakt får dessutom ett unikt ID. Användaren har möjlighet att lägga till, lista och söka i
- * listan av kontakter. När programmet startar laddas en binärfil med sparad info om listan, och när programmet avslutas
- * sparas listan till samma fil. För att ladda och spara fil används Serialization.
- * @version 1.0
- * @author Peder Waern
- *
- */
 public class AddressBookApp {
 
     private final String dataFileName = "register.data";
@@ -22,7 +13,6 @@ public class AddressBookApp {
     private Register localRegister;
 
     public AddressBookApp()  {
-
         fileManager = new FileManager(dataFileName);
         localRegister = fileManager.loadFromFile();
         regHandler = new RegisterHandler(localRegister);
@@ -30,15 +20,13 @@ public class AddressBookApp {
         autosaver = new AutoSaver(regHandler.getLocalRegister(), fileManager);
         autosaveThread = new Thread(autosaver);
         messageDisplayer = new MessageDisplayer();
-
     }
 
     public void start(){
-
         autosaveThread.start();
         messageDisplayer.displayWelcome();
-        regHandler.loadRemoteRegister("server one", Connection.SERVER_ONE_PORT);
-        regHandler.loadRemoteRegister("server two", Connection.SERVER_TWO_PORT);
+        regHandler.loadRemoteRegister("server one", ConnectionInfo.SERVER_ONE_PORT);
+        regHandler.loadRemoteRegister("server two", ConnectionInfo.SERVER_TWO_PORT);
         commandHandler.takeInput();
         autosaver.stop();
         fileManager.saveToFile(regHandler.getLocalRegister());

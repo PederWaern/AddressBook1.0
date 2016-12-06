@@ -2,9 +2,6 @@ package com.hotmail.pederwaern.AddressBookApp;
 
 import java.util.Comparator;
 
-/**
- * Created by pederwaern on 2016-11-24.
- */
 public class FirstNameComparator implements Comparator<Contact> {
 
     @Override

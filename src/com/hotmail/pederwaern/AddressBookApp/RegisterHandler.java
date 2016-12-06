@@ -16,7 +16,6 @@ public class RegisterHandler {
 
     private static final Logger logger = Logger.getLogger(RegisterHandler.class.getName());
 
-
     private ArrayList<Contact> remoteRegister;
     private Register localRegister;
 
@@ -38,8 +37,6 @@ public class RegisterHandler {
     public void loadRemoteRegister(String serverName, int port) {
         Thread remote = new Thread(new RemoteHandler(serverName, port));
         remote.start();
-
-
     }
 
     public void add(String inputString) {
@@ -54,14 +51,13 @@ public class RegisterHandler {
         String lastName = words[2];
         String email = words[3];
 
-        Contact contact = new Contact(firstName, lastName, email, true);
+        Contact contact = new Contact(firstName, lastName, email);
 
         localRegister.getContactList().add(contact);
 
         System.out.println("Contact has been added");
         logger.info("Contact added to Adressbook by user");
     }
-
 
     /**
      * Listar alla kontakter i adressboken.
@@ -104,6 +100,7 @@ public class RegisterHandler {
 
         boolean stringFound = false;
         List<Contact> listOfFoundEntries = new ArrayList<>();
+
         logger.info("User searched the register");
 
         ArrayList<Contact> localAndRemoteRegs = new ArrayList<>();
@@ -191,11 +188,11 @@ public class RegisterHandler {
                 "Mailadress:" + contact.getEmail() + "\n";
     }
 
-    //-------privat klass----
+
+    //-------privat klass----------------------------------------------------------------------------------
 
 
     private class RemoteHandler implements Runnable {
-
 
         private boolean keepLooping;
         final int port;
@@ -213,7 +210,6 @@ public class RegisterHandler {
 
         @Override
         public synchronized void run() {
-
             while (keepLooping) {
                 getContacts();
                 parseContacts();
@@ -221,7 +217,6 @@ public class RegisterHandler {
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
                     logger.log(Level.SEVERE, "Thread interrupted exception",e);
                 }
                 stop();
@@ -252,7 +247,7 @@ public class RegisterHandler {
                     lastName = arguments[2];
                     email = arguments[3];
 
-                    remoteContacts.add((new Contact(ID, firstName, lastName, email, false)));
+                    remoteContacts.add((new Contact(ID, firstName, lastName, email)));
                     logger.info("Contact ID " + ID + " from " + serverName + " on port " + port + " was imported successfully");
 
                 }
@@ -265,7 +260,7 @@ public class RegisterHandler {
 
         private void getContacts() {
             try(
-                    Socket socket = new Socket(Connection.HOST, port);
+                    Socket socket = new Socket(ConnectionInfo.HOST, port);
                     InputStreamReader inputStream = new InputStreamReader(socket.getInputStream());
                     PrintStream printStream = new PrintStream(socket.getOutputStream());
                     Scanner inputScanner = new Scanner(inputStream)
@@ -278,7 +273,6 @@ public class RegisterHandler {
                     String line = inputScanner.nextLine();
                     total = total + line + "\n";
                 }
-
                 this.contactLine = total;
 
             } catch (IOException e) {

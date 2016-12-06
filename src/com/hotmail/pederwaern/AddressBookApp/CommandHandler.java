@@ -25,7 +25,8 @@ public class CommandHandler {
                 } catch (InterruptedException e) {
                     logger.log(Level.SEVERE, "Thread interrupted", e);
                 }
-                String input = bufferedR.readLine().trim();
+                String input = bufferedR.readLine()
+                               .trim();
                 if (isAdd(input)) {
                     regHandler.add(input);
                     logger.fine("add typed: " + input);

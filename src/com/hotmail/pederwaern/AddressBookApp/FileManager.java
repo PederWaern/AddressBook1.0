@@ -17,7 +17,6 @@ public class FileManager {
 
     public Register loadFromFile() {
 
-        //try with resources
         try(ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName))) {
             Register reg = (Register) in.readObject();
             in.close();
